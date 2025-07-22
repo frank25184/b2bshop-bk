@@ -1,0 +1,2 @@
+if(chromium didn't exit):
+apt-get install -y chromium libtesseract-dev libleptonica-dev 

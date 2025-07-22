@@ -1,0 +1,505 @@
+{{#extend "css"}}
+{{!-- <meta name="twitter:image:src" content="https://coglist.com/images/open-source.png">
+<meta property="og:image" content="https://coglist.com/images/open-source.png"> --}}
+{{#if ../isGeneralStage}}
+<link rel="canonical" href="https://coglist.com/general">
+{{!-- <meta name="robots" content="noindex"> --}}
+{{/if}}
+{{#if ../isIdeaStage}}
+<link rel="canonical" href="https://coglist.com/idea">
+{{/if}}
+{{#if ../isPlanStage}}
+<link rel="canonical" href="https://coglist.com/plan">
+{{/if}}
+{{#if ../isDevelopStage}}
+<link rel="canonical" href="https://coglist.com/develop">
+{{/if}}
+{{#if ../isLaunchStage}}
+<link rel="canonical" href="https://coglist.com/launch">
+{{/if}}
+{{#if ../isMarketingStage}}
+<link rel="canonical" href="https://coglist.com/marketing">
+{{/if}}
+{{#if ../isMonetizationStage}}
+<link rel="canonical" href="https://coglist.com/monetization">
+{{/if}}
+{{#if ../isIdeaGenerator}}
+<link rel="canonical" href="https://coglist.com/idea/generate-idea">
+{{/if}}
+{{#if ../isIdeaValidator}}
+<link rel="canonical" href="https://coglist.com/idea/validate-idea">
+{{/if}}
+{{#if ../isKeywordResearch}}
+<link rel="canonical" href="https://coglist.com/data-analysis/keyword-research">
+{{/if}}
+{{#if ../isBusinessPlan}}
+<link rel="canonical" href="https://coglist.com/plan/business-plan">
+{{/if}}
+{{#if ../isDomainNameGenerator}}
+<link rel="canonical" href="https://coglist.com/develop/generate-domain-name">
+{{/if}}
+{{#if ../isProductLaunch}}
+<link rel="canonical" href="https://coglist.com/launch/launch-product">
+{{/if}}
+{{#if ../isSocialMarketing}}
+<link rel="canonical" href="https://coglist.com/marketing/social-marketing">
+{{/if}}
+{{#if ../contentMarketing}}
+<link rel="canonical" href="https://coglist.com/marketing/content-marketing">
+{{/if}}
+{{#if ../aiDetection}}
+<link rel="canonical" href="https://coglist.com/marketing/ai-detection">
+{{/if}}
+{{#if ../websiteChatbots}}
+<link rel="canonical" href="https://coglist.com/marketing/website-chatbots ">
+{{/if}}
+{{#if ../emailMarketing}}
+<link rel="canonical" href="https://coglist.com/marketing/email-marketing">
+{{/if}}
+{{#if ../socialMediaManagement}}
+<link rel="canonical" href="https://coglist.com/marketing/social-media-management">
+{{/if}}
+{{#if ../isDataAnalysisStage}}
+<link rel="canonical" href="https://coglist.com/data-analysis">
+{{/if}}
+{{#if ../competitorAnalysis}}
+<link rel="canonical" href="https://coglist.com/data-analysis/competitor-analysis">
+{{/if}}
+{{#if ../isAIChatbots}}
+<link rel="canonical" href="https://coglist.com/general/ai-chatbots">
+{{/if}}
+{{#if ../isPaymentGateways}}
+<link rel="canonical" href="https://coglist.com/monetization/payment-gateways">
+{{/if}}
+{{#if ../isAdNetworks}}
+<link rel="canonical" href="https://coglist.com/monetization/ad-networks">
+{{/if}}
+{{#if ../isAffiliateNetworks}}
+<link rel="canonical" href="https://coglist.com/monetization/affiliate-networks">
+{{/if}}
+{{#if ../isCrowdfunding}}
+<link rel="canonical" href="https://coglist.com/monetization/crowdfunding">
+{{/if}}
+{{#if ../isVpnServices}}
+<link rel="canonical" href="https://coglist.com/develop/vpn-services">
+{{/if}}
+{{#if ../isAIAgentFrameworks}}
+<link rel="canonical" href="https://coglist.com/develop/ai-agent-frameworks">
+{{/if}}
+{{#if ../isGeneralAIAgents}}
+<link rel="canonical" href="https://coglist.com/develop/ai-agents"> 
+{{/if}}
+{{#if ../isMetaSearchEngines}}
+<link rel="canonical" href="https://coglist.com/develop/meta-search-engines"> 
+{{/if}}
+{{#if ../isAIHumanizers}}
+<link rel="canonical" href="https://coglist.com/develop/ai-humanizers">
+{{/if}}
+
+<style>
+    .widget-subscribe {
+        width: 380px;
+        margin: 0 auto !important;
+    }  
+  @media (max-width: 1400px) {
+    .widget-subscribe {
+        width: 380px;
+        margin: 0 auto !important;
+    }
+  }
+  .catThumb{display:block; margin-bottom:2rem;}
+  .catThumb img{width:100%;height:150px;}
+  #more{padding: 7px 12px!important;}
+  .hero__description,.hero__title{margin-bottom:0;text-align: center;}
+  /**.subscribe-email,#membedded-subscribe2{font-size: 0.9rem;}**/
+  .widget-subscribe{margin:3rem 0 0;}
+  .widget-subscribe{margin:3rem 0 0;}  .frequency, #membedded-subscribe2, .subscribe-email{text-align: center!important;}
+  @media (max-width: 576px){
+    .form__input{width:100%!important;margin-bottom:1rem;} 
+  }
+  .sepLink{color:#f8ce5f}
+
+  .topPost {font-size: 16px;margin-bottom:0;padding:1rem;}
+  .pbrief span{font-size: 10px;color:#666;}
+  .topPost img{
+     display:block;
+     width: 100%;
+     height: 80px;
+  }
+  .pbrief{width:100%;}
+  .pintro{margin-bottom: 2px;}
+
+</style>
+{{/extend}}   
+ <!-- begin content -->
+<main class="content" aria-label="Content" id="content">   
+  <!-- begin hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="row">
+        <div class="col col-12">
+          <div class="hero__inner">
+            {{#if isGeneralStage}}
+            <h1 class="hero__title">General AI Chatbots for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover general AI-powered Chatbots for indie hackers and startup founders. </p>
+            </div>
+            {{/if}}
+            {{#if isAITools}}
+            <h1 class="hero__title">Ultimate AI Toolkit (Tools)  to Empower Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover the ultimate AI-powered toolkit (Apps) for indie hackers and solopreneurs. Unlock the full potential of AI across all stages of your startup business journey.</p>
+            </div>
+            {{/if}}            
+            {{#if isIdeaStage}}
+            <h1 class="hero__title">AI Applications to Fuel Your Business Idea</h1>
+            <div class="hero__description">
+              <p>Explore the best AI Tools and solutions to generate fresh ideas, validate your concept, and uncover the right keywords for your indie business or upcoming project.</p>
+            </div>
+            {{/if}}
+            {{#if isPlanStage}}
+            <h1 class="hero__title">AI-Powered Business Planning for Indie Startups</h1>
+            <div class="hero__description">
+              <p>Discover the best AI tools to create and validate comprehensive business plans, including AI Business Plan Generators and other business plan tools.</p>
+            </div>
+            {{/if}}
+            {{#if isDevelopStage}}
+            <h1 class="hero__title">AI Applications for Your Indie business Development</h1> 
+            <div class="hero__description"> <p>Streamline your indie startup's development with these AI tools for domain registration, cloud hosting, coding, website building, and project management.</p> </div>
+            {{/if}}
+            {{#if isLaunchStage}}
+            <h1 class="hero__title">Tools and Platforms for Startup Launch</h1> 
+            <div class="hero__description"> <p>Discover top product launch platforms, Social Media Platforms and top launching tools to help with your product launch and get early users.</p> </div>
+            {{/if}}
+            {{#if isMarketingStage}}
+            <h1 class="hero__title">Marketing Tools and Platforms for Indie Business</h1> 
+            <div class="hero__description"> <p>Discover top marketing tools to help with your product marketing and get early users, including social marketing,email marketing, social media management tools and more.</p> </div>
+            {{/if}}
+            {{#if isMonetizationStage}}
+            <h1 class="hero__title">Startup Monetization Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top startup monetization tools to monetize your startup business.</p>
+            </div>
+            {{/if}}
+            {{#if isIdeaGenerator}}
+            <h1 class="hero__title">AI Idea Generation Tools</h1>
+            <div class="hero__description">
+              <p>Explore AI Idea Generators to Get Inspiration and More Indie Business Ideas for Your Current or Upcoming Project.</p>
+            </div>
+            {{/if}}
+            {{#if isIdeaValidator}}
+            <h1 class="hero__title">AI Idea Validation Tools</h1>
+            <div class="hero__description">
+              <p>Explore AI Idea Validation Tools to Validate Your Indie Business Idea for Your Current or Upcoming Project.</p>
+            </div>
+            {{/if}}
+            {{#if isKeywordResearch}}
+            <h1 class="hero__title">AI SEO Keyword Research Tools</h1>
+            <div class="hero__description">
+              <p>Explore Keyword Research Tools to Verify the Market Demand for Your Indie Business's Main Keyword and Uncover the Right Keywords for Your Current or Upcoming Project.</p>
+            </div>
+            {{/if}}
+            {{#if isBusinessPlan}}
+            <h1 class="hero__title">AI Business Plan Generators</h1>
+            <div class="hero__description">
+              <p>Explore AI Business Plan Generators to Create Business Plans with Financial Forecasting, Market Analysis and Business Models in a few minutes, using Artificial Intelligence.</p>
+            </div>
+            {{/if}}
+            {{#if isNameGenerator}}
+            <h1 class="hero__title">AI Name Generators</h1>
+            <div class="hero__description">
+              <p>Explore AI Name Generators to Find the Perfect Domain or Brand Name for Your Indie Business or Upcoming Project. </p>
+            </div>
+            {{/if}}
+            {{#if isAIandMLServices}} 
+            <h1 class="hero__title">AI and Machine Learning Services</h1>
+            <div class="hero__description">
+              <p>Discover AI and Machine Learning (ML) Services for Your Indie Business or Upcoming Project.</p>
+            </div>
+            {{/if}}
+            {{#if isCodeEditing}}
+            <h1 class="hero__title">AI Code Editing Tools</h1>
+            <div class="hero__description">
+              <p>Boost your productivity and streamline your coding workflow with powerful AI-powered code editing tools to save you time and enhance your coding efficiency for your indie business or upcoming project.</p>
+            </div>            
+            {{/if}}
+            {{#if isCodeGeneration}}
+            <h1 class="hero__title">AI Code Generation Tools</h1>
+            <div class="hero__description">
+              <p>Pragram with our AI-powered code generation tools. Boost productivity, save time, and create high-quality code effortlessly. Explore now.</p>
+            </div>            
+            {{/if}}  
+            {{#if IsSaasBoilerplates}}
+            <h1 class="hero__title">SaaS Boilerplates & Starter Kits</h1>
+            <div class="hero__description">
+              <p>Discover a wide range of professional SaaS Boilerplates & starter kits for indie hackers to build a stunning website tailored to your specific business needs in hours, covering SEO, analytics, authentication, payments and more.</p>
+            </div>     
+            {{/if}}
+            {{#if isProductLaunch}}
+            <h1 class="hero__title">Product Launch Platforms & Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top product launch platforms & tools to successfully launch your indie project. Get traction, engage early users, and build momentum for your product.</p>
+            </div>     
+            {{/if}}
+            {{#if isSocialMarketing}}
+            <h1 class="hero__title">Social Marketing Platforms & Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top social marketing platforms & tools to grow your audience and boost engagement.</p>
+            </div>     
+            {{/if}}
+            {{#if contentMarketing}}
+            <h1 class="hero__title">Content Marketing Platforms & Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top content marketing platforms & tools to create engaging content for search engine optimization or social media marketing campaign.</p>
+            </div>     
+            {{/if}}
+            {{#if aiDetection}}
+            <h1 class="hero__title">AI Detection Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top AI detection tools to identify AI-generated content such as text, images, or audio and detect Deepfakes.</p>
+            </div>     
+            {{/if}}
+            {{#if websiteChatbots}}
+            <h1 class="hero__title">AI-powered Website Chatbots for Startups</h1>
+            <div class="hero__description">
+              <p>Discover top AI-powered website chatbots to engage with your audience and boost conversions on your website.</p>
+            </div>     
+            {{/if}}
+            {{#if isVpnServices}}
+            <h1 class="hero__title">VPN Services for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top VPN services & Softwares to protect your privacy and access restricted content.</p>
+            </div>     
+            {{/if}}
+            {{#if emailMarketing}}
+            <h1 class="hero__title">Email Marketing Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top email marketing platforms & tools to grow your audience and boost engagement.</p>
+            </div>     
+            {{/if}}
+            {{#if socialMediaManagement}}
+            <h1 class="hero__title">Social Media Management Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top social media management platforms & tools to manage your social media accounts and boost engagement.</p>
+            </div>     
+            {{/if}}
+            {{#if isDataAnalysisStage}}
+            <h1 class="hero__title">Data Analysis Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top data analysis tools to do data, marketing or keyword research for your niche and learn more from competitors analysis.</p>
+            </div> 
+            {{/if}}
+            {{#if competitorAnalysis}}
+            <h1 class="hero__title">Competitor Analysis Tools for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top competitor analysis tools to do competitor research for your niche and find opportunities.</p>
+            </div> 
+            {{/if}}
+            {{#if isAIChatbots}}
+            <h1 class="hero__title">AI Chatbots for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top general AI chatbots to help with your product development from ideation, design, development to launch.</p>
+            </div> 
+            {{/if}}
+            {{#if isPaymentGateways}}
+            <h1 class="hero__title">Website Payment Gateways (Tools) for Indie Startup Business</h1>
+            <div class="hero__description">
+              <p>Discover top payment gateways (tools) to accept payments for your indie startup business.</p>
+            </div> 
+            {{/if}}
+            {{#if isAdNetworks}}
+            <h1 class="hero__title">Ad Networks (Platforms) for Indie Startup Business</h1>
+            <div class="hero__description">
+              <p>Discover top ad networks (platforms) to advertise or monetize your startup business.</p>
+            </div> 
+            {{/if}}
+            {{#if isAffiliateNetworks}}
+            <h1 class="hero__title">Affiliate Networks for Indie Startup Business</h1>
+            <div class="hero__description">
+              <p>Discover top affiliate networks to promote your startup business.</p>
+            </div> 
+            {{/if}}
+            {{#if isCrowdfunding}}
+            <h1 class="hero__title">Crowdfunding Tools & Platforms for Indie Startup Business</h1>
+            <div class="hero__description">
+              <p>Discover top crowdfunding tools & platforms to raise funds for your startup business.</p>
+            </div> 
+            {{/if}}
+            {{#if isEcommercePlatforms}}
+            <h1 class="hero__title">Ecommerce Platforms & Softwares for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top ecommerce platforms & Softwares to build your ecommerce website.</p>
+            </div> 
+            {{/if}}
+            {{#if isGeneralAIAgents}}
+            <h1 class="hero__title">General AI Agents for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top general AI agents to help with indie hackers' product development.</p>
+            </div>
+            {{/if}}
+            {{#if isAIAgentFrameworks}}
+            <h1 class="hero__title">AI Agent Frameworks for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top AI agent frameworks to help with indie hackers' product development.</p>
+            </div>
+            {{/if}}
+            {{#if isMetaSearchEngines}}
+            <h1 class="hero__title">Meta Search Engines for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top meta search engines (api) to aggregate results from multiple search engines in your own indie product.</p>
+            </div>
+            {{/if}}
+            {{#if isAIHumanizers}}
+            <h1 class="hero__title">AI Humanizers for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top AI humanizers to make AI generated text from ChatGPT,Claude,Gemini,Deepseek etc. undetectable..</p>
+            </div>
+            {{/if}}
+            {{#if isCloudServices}}
+            <h1 class="hero__title">Cloud Hosting Services for Indie Hackers</h1>
+            <div class="hero__description">
+              <p>Discover top cloud hosting services for indie hackers to host their websites, apps, and other online projects.</p>
+            </div>
+            {{/if}}
+            {{#if isAISearchEngines}}
+            <h1 class="hero__title">AI Search Engines for Startup Business</h1>
+            <div class="hero__description">
+              <p>Discover top AI search engines to summarize market trends, competitors, and product ideas in seconds from multiple internet results for your indie business needs.</p>
+            </div>
+            {{/if}}
+            {{!-- {{#if isSubscriptionManagement}}
+            <h1 class="hero__title">Subscription Management Tools for Indie Hackers</h1> 
+            {{/if}} --}}
+          <div class="widget-subscribe">   
+            <form class="subscribe-form validate"
+              action="/admin/subscribe?from=ideaGeneratorTools" method="POST" id="membedded-subscribe-form2" name="membedded-subscribe-form" target="_blank" novalidate>
+              <label class="screen-reader-text" for="mce-EMAIL2">Never miss our weekly news, including AI Idea Generation Tools for Indie Hackers</label>
+              <select name="frequency" class="form__input" class="frequency" style="width: 25%; margin-right: 2rem;">
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+              </select>
+              <input class="subscribe-email required email" id="mce-EMAIL2" autocomplete="on"  type="email" name="email" placeholder="Your email address">  
+              <button class="button button--big" id="membedded-subscribe2" type="submit" name="subscribe">Subscribe</button>
+            </form>
+            <p class="result"></p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- begin section-tag -->
+  <section class="section section-tags animate">
+    <div class="container">
+      <div class="row">
+        <div class="col col-12">
+          <div class="section__inner" style="border-bottom:0;">
+            <div class="row" id="prolist">
+              {{#if products.length}}
+              {{#each products}}
+              <div class="col col-4 col-d-6 col-t-12">
+                  {{> v2/general/product}}
+              </div>
+              {{/each}}
+{{!-- list ads --}}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1402489951269339"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-6p+d6+34-61+9d"
+     data-ad-client="ca-pub-1402489951269339"
+     data-ad-slot="4526761300"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     {{#if products.length}}
+      <div class="container animate">
+        <div class="pagination">
+          {{#if isLastPage}}
+              <button class="button" style="pointer-events: none; opacity: 0.5;">More Coming</button>
+          {{else}}
+          <button class="button" id="more">Load More</button>
+          {{/if}}
+        </div>
+      </div>  
+    {{/if}}
+  </section>
+</main>
+{{#extend "js"}}
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+          var loadMoreButton = document.getElementById('more');
+          var currentPage = 1;
+          var currentPagePath = window.location.pathname;
+          loadMoreButton.addEventListener('click', function() {
+          currentPage++;
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', currentPagePath +'?p=' + currentPage, true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                if (data.products && data.products.length > 0) {
+                  var articlesList = document.getElementById('prolist');
+                  data.products.forEach(function(product) {
+                    var colDiv = document.createElement('div');
+                    colDiv.className = 'col col-4 col-d-6 col-t-12';
+                    var articleDiv = document.createElement('div');
+                    articleDiv.className = 'article';
+                    var articleInnerDiv = document.createElement('div');
+                    articleInnerDiv.className = 'article__inner';
+                    var articleContent = document.createElement('div');
+                    articleContent.className = 'article__content';
+                    var authorImageDiv = document.createElement('div');
+                    authorImageDiv.className = 'post__author__image catThumb';
+                    var img = document.createElement('img');
+                    img.setAttribute('src', '/upload/sites/thumbnail/' + product.imgs[0]);
+                    img.alt = product.name;
+                    authorImageDiv.appendChild(img);
+                    var articleTitle = document.createElement('h3');
+                    articleTitle.className = 'article__title';
+                    var titleLink = document.createElement('a');
+                    titleLink.href = '/review/' + product.name_changed;
+                    titleLink.textContent = product.name; 
+                    articleTitle.appendChild(titleLink);
+                    var articleInfo = document.createElement('div');
+                    articleInfo.className = 'article__info';
+                    var infoParagraph = document.createElement('p');
+                    infoParagraph.style.marginBottom = '0';
+                    infoParagraph.textContent = product.intro;
+                    articleInfo.appendChild(infoParagraph);
+                    articleContent.appendChild(authorImageDiv);
+                    articleContent.appendChild(articleTitle);
+                    articleContent.appendChild(articleInfo);
+                    articleInnerDiv.appendChild(articleContent);
+                    articleDiv.appendChild(articleInnerDiv);
+                    colDiv.appendChild(articleDiv);
+                    articlesList.appendChild(colDiv);
+                  });
+                  if (data.isLastPage) {
+                   loadMoreButton.innerHTML = 'More Coming Soon';
+                   loadMoreButton.style.backgroundColor = "#e3e3e3";
+                   loadMoreButton.disabled = true;
+                  }
+                } else {
+                  console.error('error, More Coming Soon');
+                }
+            }
+          };
+          xhr.onerror = function() {
+            console.error('Error loading more projects');
+            loadMoreButton.innerHTML = 'More Coming Soon!';
+            loadMoreButton.disabled = true;
+          };
+          xhr.send();
+          });
+      });
+    </script>
+{{/extend}}

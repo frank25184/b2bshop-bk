@@ -1,0 +1,88 @@
+/**
+ * 将输入数据格式化为JSONL
+ * @param {string | object | Array | any} input - 输入数据（支持字符串、对象、数组等）
+ * @returns {string} - JSONL格式的字符串，每行一个JSON对象
+ * @throws {Error} - 如果输入无法处理，抛出具体错误
+ */
+function formatToJsonl(input) {
+  // 处理空输入
+  if (input === null || input === undefined || input === '') {
+    throw new Error('输入数据为空');
+  }
+
+  let data;
+
+  // Step 1: 标准化输入
+  if (typeof input === 'string') {
+    try {
+      // 尝试解析为JSON
+      data = JSON.parse(input);
+    } catch (e) {
+      // 如果不是合法JSON，按纯文本处理，逐行拆分
+      data = input
+        .trim()
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line); // 移除空行
+    }
+  } else {
+    // 非字符串输入（对象、数组等）
+    data = input;
+  }
+
+  // Step 2: 确保数据是数组
+  if (!Array.isArray(data)) {
+    data = [data];
+  }
+
+  // Step 3: 转换为JSONL
+  const jsonlLines = data.map((item, index) => {
+    try {
+      // 如果是对象，序列化为紧凑JSON
+      if (typeof item === 'object' && item !== null) {
+        return JSON.stringify(item, null, 0); // 无缩进，紧凑格式
+      }
+      // 非对象直接转为字符串
+      return String(item);
+    } catch (e) {
+      throw new Error(`第 ${index + 1} 项序列化失败: ${e.message}`);
+    }
+  });
+
+  // Step 4: 检查结果并返回
+  if (jsonlLines.length === 0) {
+    throw new Error('转换后无有效数据');
+  }
+
+  return jsonlLines.join('\n');
+}
+
+// 示例用法（可用于测试）
+try {
+  // 测试1: 单个JSON对象
+  console.log(formatToJsonl('{"name": "张三", "age": 25}'));
+  // 输出: {"name":"张三","age":25}
+
+  // 测试2: JSON数组
+  console.log(formatToJsonl('[{"name": "张三"}, {"name": "李四"}]'));
+  // 输出:
+  // {"name":"张三"}
+  // {"name":"李四"}
+
+  // 测试3: 纯文本
+  console.log(formatToJsonl('第一行\n第二行'));
+  // 输出:
+  // 第一行
+  // 第二行
+
+  // 测试4: 对象数组
+  console.log(formatToJsonl([{ name: '张三' }, { name: '李四' }]));
+  // 输出同测试2
+
+  // 测试5: 非法输入
+  console.log(formatToJsonl('{invalid json}'));
+} catch (error) {
+  console.error('错误:', error.message);
+}
+
+module.exports = formatToJsonl;

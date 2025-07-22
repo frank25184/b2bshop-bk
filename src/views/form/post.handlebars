@@ -1,0 +1,276 @@
+{{#extend "css"}}
+<style>
+  h4.sb-mb-15 { margin: 2rem 0 1rem; font-size: 1.5rem; }
+  .tip { text-align: left; color: grey; font-size: 0.9rem; margin-top: 0.5rem; }
+  .form-group { margin-bottom: 1.5rem; }
+  .char-count { float: right; font-size: 0.8rem; color: #666; }
+</style>
+{{/extend}}
+
+<section class="sb-banner sb-banner-color">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <div class="sb-contact-form-frame">
+          <div class="sb-form-content">
+            <div class="sb-main-content">
+              <h3 class="sb-mb-30">Create New Article</h3>
+              <form class="form" action="/admin/post-article" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <!-- Featured Image Upload -->
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <input type="file" id="topIMG" name="topIMG" accept="image/*" style="padding-top:0.7rem;">
+                    <label for="topIMG">Featured Image *</label>
+                    <p class="tip">Recommended size: 1200x630px</p>
+                  </div>
+                </div>
+
+                <!-- Title -->
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <input type="text" class="form-control" id="title" name="title" required>
+                    <label for="title">Article Title *</label>
+                  </div>
+                </div>
+
+                <!-- Introduction -->
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <textarea class="form__input" id="intro" name="intro" rows="4" maxlength="300" required></textarea>
+                    <span id="introCount" class="char-count">0/300</span>
+                    <label class="form__label" for="intro">Introduction (Brief summary of your article) *</label>
+                  </div>
+                </div>
+
+                <!-- Category & Subcategory -->
+                <div class="sb-group-input">
+                    <select name="category" class="form-select" id="form-category" required>
+                        <option value="" selected disabled>Select a Category</option>
+                        <option value="electrotherapy">Electrotherapy</option>
+                        <option value="bioresonance therapy">Bioresonance Therapy</option>
+                        <option value="bioenergetic Therapy">Bioenergetic Therapy</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+                </div>
+
+                <div class="sb-group-input" style="margin-top: 15px;">
+                    <select name="subcategory" class="form-select" id="form-subcategory" required>
+                        <option value="" selected disabled>Select a Subcategory</option>
+                    </select>
+                </div>
+
+                <!-- Tags -->
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <input type="text" class="form-control" id="tags" name="tags">
+                    <label for="tags">Tags (comma separated)</label>
+                    <p class="tip">Example: technology, web development, programming</p>
+                  </div>
+                </div>
+
+                <!-- Content Editor -->
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <textarea class="form__input" name="content"  rows="20" cols="100" placeholder="Product Detail..." id="editor"></textarea>
+                    <label for="editor">Article Content *</label>
+                  </div>
+                </div>
+
+                <!-- SEO Section -->
+                <h4 class="sb-mb-15">SEO Settings</h4>
+                
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <input type="text" class="form__input" id="seoTitle" name="seoTitle" maxlength="60">
+                    <span id="titleCount" class="char-count">0/60</span>
+                    <label class="form__label" for="seoTitle">SEO Title</label>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <input type="text" class="form__input" id="seoKeywords" name="seoKeywords" placeholder="article, writing, blog">
+                    <label class="form__label" for="seoKeywords">SEO Keywords (comma separated)</label>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <textarea class="form__input" id="seoDescription" name="seoDescription" rows="3" maxlength="160"></textarea>
+                    <span id="descriptionCount" class="char-count">0/160</span>
+                    <label class="form__label" for="seoDescription">SEO Description</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="sb-group-input">
+                    <input type="text" class="form__input" id="pathName" name="pathName">
+                    <label class="form__label" for="pathName">Path Name * (e.g. article-title)</label>
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group" style="text-align: center; margin-top: 2rem;">
+                  <button type="submit" class="sb-btn sb-cf-submit">
+                    <span class="sb-icon">
+                      <img src="/images/picture/arrow.svg" alt="icon">
+                    </span>
+                    <span>Publish Article</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{#extend "js"}}
+{{!-- <script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
+<script>
+  // Define categories and their subcategories
+  const categories = {
+    "electrotherapy": ["frequency electrotherapy devices"],
+    "bioresonance therapy": ["low frequency resonators"],
+    "bioenergetic Therapy": ["bio energy terahertz devices"],
+    "accessories": ["accessories"]
+  };
+
+  // Get DOM elements
+  const categorySelect = document.getElementById('form-category');
+  const subcategorySelect = document.getElementById('form-subcategory');
+
+  // Function to populate subcategories based on selected category
+  function populateSubcategories() {
+    // Clear existing options except the first one
+    while (subcategorySelect.options.length > 1) {
+      subcategorySelect.remove(1);
+    }
+
+    // Get selected category
+    const selectedCategory = categorySelect.value;
+    
+    // If a category is selected, populate its subcategories
+    if (selectedCategory && categories[selectedCategory]) {
+      const subcategories = categories[selectedCategory];
+      
+      subcategories.forEach(subcategory => {
+        const option = document.createElement('option');
+        option.value = subcategory;
+        // Convert to title case for display
+        const displayText = subcategory.split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+        option.textContent = displayText;
+        subcategorySelect.appendChild(option);
+      });
+    }
+  }
+
+  // Add event listener for category change
+  if (categorySelect) {
+    categorySelect.addEventListener('change', populateSubcategories);
+  }
+
+  // Initialize subcategories if a category is already selected (e.g., on form validation error)
+  document.addEventListener('DOMContentLoaded', function() {
+    if (categorySelect.value) {
+      populateSubcategories();
+    }
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js" integrity="sha512-eV68QXP3t5Jbsf18jfqT8xclEJSGvSK5uClUuqayUbF5IRK8e2/VSXIFHzEoBnNcvLBkHngnnd3CY7AFpUhF7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  // Initialize TinyMCE
+    var domain = document.domain +':'+ window.location.port;
+    domain = window.location.protocol + "//" + domain;
+    let returnFile = function(res){
+      return domain + "/upload/articles/" + res.data.filename;
+    } 
+    tinymce.init({
+      selector: '#editor',
+      plugins: 'image link table advtable preview code',
+      toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code link table preview removeformat |  image',
+      table_class_list: [
+      { title: 'Default', value: 'table table-bordered' },
+      { title: 'Striped', value: 'table table-bordered table-striped' },
+      { title: 'Hover', value: 'table table-bordered table-hover' }
+      ], 
+      relative_urls: false,
+      remove_script_host: false,      
+      images_upload_handler: (blobInfo, success, failure) => {
+        const formData = new FormData();
+        formData.append('image', blobInfo.blob(), blobInfo.filename());
+
+        axios.post('/admin/upload2article', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+          .then(response => success(returnFile(response)))
+          .catch(error => failure('Image upload failed: ' + error));
+      },
+      file_picker_callback: (callback, value, meta) => {
+        if (meta.filetype === 'image') {
+          const input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          input.setAttribute('accept', 'image/*');
+          input.onchange = () => {
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+            axios.post('/admin/upload2article', formData, {
+              headers: { 'Content-Type': 'multipart/form-data' }
+            })
+              .then(response => {
+                callback(returnFile(response));
+              })
+              .catch(error => console.error(error));
+          };
+          input.click();
+        }
+      }
+    });
+
+  // Character counters
+  document.addEventListener('DOMContentLoaded', function() {
+    // Intro counter
+    const intro = document.getElementById('intro');
+    const introCount = document.getElementById('introCount');
+    
+    // SEO Title counter
+    const seoTitle = document.getElementById('seoTitle');
+    const titleCount = document.getElementById('titleCount');
+    
+    // SEO Description counter
+    const seoDescription = document.getElementById('seoDescription');
+    const descriptionCount = document.getElementById('descriptionCount');
+
+    // Update counters on input
+    [intro, seoTitle, seoDescription].forEach(element => {
+      if (element) {
+        element.addEventListener('input', function() {
+          const counter = this.id === 'intro' ? introCount : 
+                           this.id === 'seoTitle' ? titleCount : descriptionCount;
+          const maxLength = this.getAttribute('maxlength');
+          counter.textContent = this.value.length + '/' + maxLength;
+        });
+      }
+    });
+
+    // Initialize counters
+    if (intro && introCount) {
+      intro.dispatchEvent(new Event('input'));
+    }
+    if (seoTitle && titleCount) {
+      seoTitle.dispatchEvent(new Event('input'));
+    }
+    if (seoDescription && descriptionCount) {
+      seoDescription.dispatchEvent(new Event('input'));
+    }
+  });
+</script>
+{{/extend}}

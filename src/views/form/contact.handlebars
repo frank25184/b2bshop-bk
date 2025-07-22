@@ -1,0 +1,48 @@
+      <section class="sb-banner sb-banner-color supportTop">
+         {{> page/contact}}
+      </section>
+      <!-- banner end -->
+
+      <!-- contact info -->
+      <section class="sb-p-90-30">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="sb-features-item sb-mb-60">
+                <div class="sb-number">01</div>
+                <div class="sb-feature-text">
+                  <h3 class="sb-mb-15">Welcome</h3>
+                  <p class="sb-text">Building B, 1 floor, Maxi Hi-tech Park, Linan district, Hangzhou, China</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="sb-features-item sb-mb-60">
+                <div class="sb-number">02</div>
+                <div class="sb-feature-text">
+                  <h3 class="sb-mb-15">Call</h3>
+                  <p class="sb-text">+(086) 13002632911</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="sb-features-item sb-mb-60">
+                <div class="sb-number">03</div>
+                <div class="sb-feature-text">
+                  <h3 class="sb-mb-15">Contact</h3>
+                  <p class="sb-text">info@minshengmedical.com</p>
+                  <p class="sb-text">minshengmedical@hotmail.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- contact info end -->
+
+
+      {{#extend "js"}}
+      <script>
+     initializeContactForm('contactForm','/user/postContact');
+      </script>
+      {{/extend}}

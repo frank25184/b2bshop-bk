@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizLab AI</title>
+    <!-- FontAwesome CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .hamburger {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            font-size: 2rem;
+            color: #1e90ff;
+            cursor: pointer;
+            z-index: 50;
+            display: block;
+        }
+        @media (min-width: 768px) {
+            .hamburger {
+                display: none;
+            }
+        }
+
+        /* Sidebar Navigation */
+        #menu-toggle {
+            display: none;
+        }
+        #menu-toggle:checked ~ .hamburger i::before {
+            content: "\f00d"; /* FontAwesome 'X' icon */
+        }
+        #menu-toggle:checked ~ .sidebar {
+            transform: translateX(0);
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 16rem;
+            background-color: #fff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            transform: translateX(-100%);
+            transition: transform 300ms;
+            z-index: 40;
+        }
+        @media (min-width: 768px) {
+            .sidebar {
+                transform: translateX(0);
+            }
+        }
+
+        /* Sidebar Content */
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .logo i {
+            margin-right: 0.5rem;
+            color: #1e90ff;
+            font-size: 1.5rem;
+        }
+        .logo span {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1e90ff;
+        }
+
+        /* Navigation */
+        nav ul {
+            list-style-type: none;
+        }
+        nav ul li {
+            margin-bottom: 0.5rem;
+        }
+        nav ul li a {
+            display: flex;
+            align-items: center;
+            color: #374151;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav ul li a i {
+            margin-right: 1rem;
+            color: #374151;
+        }
+        nav ul li a.active,
+        nav ul li a:hover {
+            background-color: #ebf8ff;
+            color: #1e90ff;
+        }
+        nav ul li a.active i,
+        nav ul li a:hover i {
+            color: #1e90ff;
+        }
+
+        /* Quiz Usage */
+        .quiz-usage {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+        }
+        .quiz-usage p {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 0.25rem;
+        }
+        .quiz-usage a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        /* User Info */
+        .user-info {
+            position: absolute;
+            bottom: 1rem;
+            width: calc(100% - 2rem);
+        }
+        .user-info p {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+        .user-info a {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            color: #1e90ff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .user-info a i {
+            margin-right: 0.25rem;
+        }
+        .user-info a:hover {
+            color: #1477d1;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 1.5rem;
+            margin-left: 0;
+        }
+        @media (min-width: 768px) {
+            .main-content {
+                margin-left: 16rem;
+            }
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .header .actions {
+            display: flex;
+            gap: 1rem;
+        }
+        .header .actions a {
+            text-decoration: none;
+            color: #374151;
+            transition: color 0.3s;
+        }
+        .header .actions a:last-child {
+            color: #1e90ff;
+        }
+        .header .actions a:hover {
+            color: #1e90ff;
+        }
+        .header .actions a:last-child:hover {
+            text-decoration: underline;
+        }
+
+        /* Paragraphs */
+        p {
+            margin-bottom: 1.5rem;
+            color: #4b5563;
+        }
+
+        /* Dashboard Section Layout */
+        #dashboard-section {
+            display: flex;
+            flex-direction: column;
+        }
+        @media (min-width: 768px) {
+            #dashboard-section {
+                flex-direction: row;
+                gap: 1rem;
+            }
+        }
+
+        /* Central Content */
+        .central-content {
+            flex: 3;
+        }
+        @media (max-width: 767px) {
+            .central-content {
+                width: 100%;
+            }
+        }
+
+        /* Preview Panel */
+        .preview-panel {
+            flex: 1;
+            background-color: #f3f4f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px -2px #999;
+        }
+        @media (max-width: 767px) {
+            .preview-panel {
+                width: 100%;
+                margin-top: 1rem;
+            }
+        }
+        .preview-panel h2 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        /* Create Quiz Form */
+        .create-quiz-form {
+            margin-top: 1rem;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .create-quiz-form h2 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        .upload-file label {
+            display: block;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+        .upload-file label:hover {
+            background-color: #f3f4f6;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .number-of-questions {
+            margin-top: 1rem;
+        }
+        .number-of-questions label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input[type="range"] {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        #slider-value {
+            font-size: 0.875rem;
+            color: #f59e0b;
+        }
+        .difficulty-level,
+        .question-type {
+            margin-top: 1rem;
+        }
+        .difficulty-level label,
+        .question-type label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .difficulty-level div,
+        .question-type div {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .difficulty-level input,
+        .question-type input {
+            margin-right: 0.5rem;
+        }
+        .generate-quiz-button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            background-color: #ccc;
+            color: #fff;
+            border: none;
+        }
+        .generate-quiz-button:disabled {
+            cursor: not-allowed;
+        }
+        .generate-quiz-button:hover:not(:disabled) {
+            background-color: #1e90ff;
+        }
+
+        /* Recent Quizzes */
+        .recent-quizzes {
+            margin-top: 2rem;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .recent-quizzes h2 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .recent-quizzes p {
+            margin-bottom: 1rem;
+        }
+        .view-all {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            color: #374151;
+            text-decoration: none;
+        }
+        .view-all:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu for Mobile -->
+    <input type="checkbox" id="menu-toggle" class="hidden">
+    <label for="menu-toggle" class="hamburger">
+        <i class="fas fa-bars"></i>
+    </label>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-book"></i>
+            <span>QuizLab AI</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" data-section="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" data-section="learn"><i class="fas fa-graduation-cap"></i> Learn</a></li>
+                <li><a href="#" data-section="history"><i class="fas fa-clock"></i> History</a></li>
+                <li><a href="#" data-section="suggest-feature"><i class="fas fa-lightbulb"></i> Suggest Feature</a></li>
+                <li><a href="#" data-section="manage-subscription"><i class="fas fa-credit-card"></i> Manage Subscription</a></li>
+            </ul>
+        </nav>
+        <div class="quiz-usage">
+            <p>Quiz Usage</p>
+            <p>0 / 10 this month</p>
+            <p><a href="#">10 quizzes remaining</a></p>
+        </div>
+        <div class="user-info">
+            <p>Frank <br> frank25184@gmail.com</p>
+            <a href="#"><i class="fas fa-sign-out-alt"></i> Sign out</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div id="dashboard-section" class="section active">
+            <div class="central-content">
+                <div class="header">
+                    <h1>Welcome back!</h1>
+                    <div class="actions">
+                        <a href="#" data-section="dashboard">Dashboard</a>
+                        <a href="#" class="sign-out">Sign Out</a>
+                    </div>
+                </div>
+                <p class="text-gray-600">Upload your materials to generate your quiz.</p>
+                <p class="text-gray-600">Use the selections below to refine your choices.</p>
+                <div class="create-quiz-form">
+                    <h2>CREATE NEW QUIZ</h2>
+                    <div class="upload-file">
+                        <label for="file-upload">Upload PDF</label>
+                        <input type="file" id="file-upload" accept=".pdf">
+                    </div>
+                    <div class="number-of-questions">
+                        <label>NUMBER OF QUESTIONS</label>
+                        <input type="range" min="1" max="10" value="5" id="question-slider">
+                        <p id="slider-value">5 (MAX 10 FOR FREE USERS)</p>
+                    </div>
+                    <div class="difficulty-level">
+                        <label>DIFFICULTY LEVEL</label>
+                        <div>
+                            <input type="radio" name="difficulty" value="easy"> Easy
+                            <input type="radio" name="difficulty" value="medium" checked> Medium
+                            <input type="radio" name="difficulty" value="hard"> Hard
+                        </div>
+                    </div>
+                    <div class="question-type">
+                        <label>QUESTION TYPE</label>
+                        <div>
+                            <input type="radio" name="question-type" value="multiple-choice" checked> Multiple Choice
+                            <input type="radio" name="question-type" value="open-ended"> Open Ended
+                            <input type="radio" name="question-type" value="mixed"> Mixed
+                        </div>
+                    </div>
+                    <button class="generate-quiz-button" disabled>GENERATE QUIZ</button>
+                </div>
+                <div class="recent-quizzes">
+                    <h2>Recent Quizzes</h2>
+                    <p>No quizzes generated yet. Upload a PDF to get started!</p>
+                    <a href="#" class="view-all">VIEW ALL</a>
+                </div>
+            </div>
+            <div class="preview-panel">
+                <div class="quiz-preview-panel">
+                    <h2>QUIZ PREVIEW</h2>
+                    <p>Your quiz will appear here after generation Configure your settings and click 'Generate Quiz' to begin</p>
+                </div>
+            </div>
+        </div>
+        <!-- Other sections remain as placeholders for now -->
+        <div id="learn-section" class="section hidden">
+            <div class="header">
+                <h1>Learn</h1>
+                <div class="actions">
+                    <a href="#" data-section="dashboard">Dashboard</a>
+                    <a href="#" class="sign-out">Sign Out</a>
+                </div>
+            </div>
+            <p>Learn content goes here.</p>
+        </div>
+        <div id="history-section" class="section hidden">
+            <div class="header">
+                <h1>History</h1>
+                <div class="actions">
+                    <a href="#" data-section="dashboard">Dashboard</a>
+                    <a href="#" class="sign-out">Sign Out</a>
+                </div>
+            </div>
+            <p>History content goes here.</p>
+        </div>
+        <div id="suggest-feature-section" class="section hidden">
+            <div class="header">
+                <h1>Suggest Feature</h1>
+                <div class="actions">
+                    <a href="#" data-section="dashboard">Dashboard</a>
+                    <a href="#" class="sign-out">Sign Out</a>
+                </div>
+            </div>
+            <p>Suggest feature content goes here.</p>
+        </div>
+        <div id="manage-subscription-section" class="section hidden">
+            <div class="header">
+                <h1>Manage Subscription</h1>
+                <div class="actions">
+                    <a href="#" data-section="dashboard">Dashboard</a>
+                    <a href="#" class="sign-out">Sign Out</a>
+                </div>
+            </div>
+            <p>Manage subscription content goes here.</p>
+        </div>
+    </div>
+    <script>
+        var navLinks = document.querySelectorAll('.sidebar nav ul li a');
+        var sections = document.querySelectorAll('.section');
+        for (var i = 0; i < navLinks.length; i++) {
+            navLinks[i].addEventListener('click', function(e) {
+                e.preventDefault();
+                var sectionId = this.dataset.section;
+                // Hide all sections
+                for (var j = 0; j < sections.length; j++) {
+                    sections[j].classList.add('hidden');
+                }
+                // Show the selected section
+                document.getElementById(sectionId + '-section').classList.remove('hidden');
+                // Update active link
+                for (var k = 0; k < navLinks.length; k++) {
+                    navLinks[k].classList.remove('active');
+                }
+                this.classList.add('active');
+                // Close sidebar on mobile after clicking a link
+                if (window.innerWidth < 768) {
+                    document.getElementById('menu-toggle').checked = false;
+                }
+            });
+        }
+        // Slider Value Update
+        var slider = document.getElementById('question-slider');
+        var sliderValue = document.getElementById('slider-value');
+        slider.oninput = function() {
+            sliderValue.textContent = this.value + ' (MAX 10 FOR FREE USERS)';
+        };
+    </script>
+</body>
+</html>

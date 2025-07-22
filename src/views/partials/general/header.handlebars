@@ -1,0 +1,69 @@
+    <div class="sb-top-bar-frame">
+      <div class="sb-top-bar-bg"></div>
+      <div class="container">
+        <div class="sb-top-bar">
+          <a href="/" class="sb-logo-frame">
+            <img src="/images/picture/topley.png" alt="Medical Devices">
+          </a> 
+          <!-- menu -->
+          <div class="sb-right-side">
+            <nav id="sb-dynamic-menu" class="sb-menu-transition">
+              <ul class="sb-navigation">
+                <li class="sb-active sb-has-children">
+                  <a href="/">Home</a>
+                </li>
+                <li class="sb-has-children">
+                  <a href="/products">Products</a>
+                  <ul>
+                    <li><a href="/product/medium-frequency-electrotherapy-device">Medium Frequency Electrotherapy Device</a></li>
+                    <li><a href="/product/low-frequency-resonance-activator-7.8-hz">Bio Energy Terahertz Device</a></li>
+                  </ul>
+                </li>
+                <li class="sb-has-children">
+                  <a href="/support/contact">Contact</a>
+                </li>
+                <li class="sb-has-children">
+                  <a href="/support/faq">FAQ</a>
+                </li>
+                <li class="sb-has-children">
+                  <a href="/support/about">About Us</a>
+                </li>
+                {{!-- <li class="sb-has-children">
+                  <a>Support</a>
+                  <ul>
+                    <li><a href="/support/contact">Contact</a></li>
+                    <li><a href="/support/faq">FAQ</a></li>
+                    <li><a href="/support/about">About Us</a></li>
+                  </ul>
+                </li> --}}
+                {{#if isAdmin}}
+                <li class="sb-has-children">
+                  <a href="/products">Manage</a>
+                  <ul>
+                    <li><a href="/admin/submitProduct">Submit a Product</a></li>
+                    <li><a href="/admin/make-article">Make an Blog Article</a></li>
+                  </ul>
+                </li>
+                {{/if}}
+              </ul>
+            </nav>
+
+            <div class="sb-buttons-frame">
+              <!-- button -->
+              <div class="sb-btn sb-btn-2 sb-btn-gray sb-btn-icon sb-m-0 sb-btn-cart">
+              <ul class="sb-social">
+                <li><a href="mailto:info@minshengmedical.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
+                <li><a href="https://wa.me/64204848398" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+                {{!-- <li><a href=""><i class="fab fa-twitter"></i></a></li> --}}
+                {{!-- <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href=""><i class="fab fa-youtube"></i></a></li> --}}
+              </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- info bar end -->
+    </div>
+    <!-- top bar end -->

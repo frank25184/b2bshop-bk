@@ -1,0 +1,121 @@
+{{#extend "css"}}
+<link rel="canonical" href="https://coglist.com/roadmap">
+    <style>
+.roadmap {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.roadmap-container {
+    position: relative;
+    padding-left: 20px;
+}
+
+.roadmap-item {
+    position: relative;
+    margin: 20px 0;
+}
+
+.dot {
+    position: absolute;
+    left: -10px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+.unfinished .dot{background-color: #B0BEC5!important} .finished .dot{background-color: #4CAF50!important} 
+.doing  .dot{background-color: #2196F3!important}
+.unfinished h2{color: #B0BEC5!important} .finished h2{color: #4CAF50!important} 
+.doing  h2{color: #2196F3!important}
+.content {
+    padding-left: 30px;
+    border-left: 2px dotted #4CAF50;
+}
+.unfinished .content{border-left: 2px dotted#B0BEC5!important} 
+.finished .content{border-left: 2px dotted#4CAF50!important} 
+.doing  .content{border-left: 2px dotted#2196F3!important}
+.content h2 {
+    color: #4CAF50;
+}
+
+.content p {
+    color: #555;
+}
+
+    </style>
+{{/extend}}
+<main style="margin-bottom:2rem;">
+    <div class="roadmap">
+        <h1>RoadMap</h1>
+        <div class="roadmap-container">
+            <div class="roadmap-item finished">
+                <div class="dot"></div>
+                <div class="content">
+                    <h2>First Version - April 20, 2023</h2>
+                    <p>First version of Coglist.com as an AI App recommendation site.</p>
+                </div>
+            </div>            
+            <div class="roadmap-item finished">
+                <div class="dot"></div>
+                <div class="content">
+                    <h2>Launch AI Hightlights - Oct. 1, 2024</h2>
+                    <p>Launch AI Hightlights - an AI weekly Newsletter for Indie Hackers</p>
+                </div>
+            </div>
+            <div class="roadmap-item doing">
+                <div class="dot"></div>
+                <div class="content">
+                    <h2>Comprehensive Startup Guide with App Recommendations for Every Stage of the Startup Lifecycle - Dec. 30, 2025 </h2>
+                    <p>Provide the guide with App recommendations for each stage of the startup lifecycle for indie hackers, including Idea Stage, Planning Stage, Development Stage, Testing Stage, Launch Stage, Marketing and Outreach, Customer Support, Maintenance Stage, Community and Resources, and Success Stories.</p>
+                </div>
+            </div>
+            <div class="roadmap-item unfinished">
+                <div class="dot"></div>
+                <div class="content">
+                    <h2>Advanced Search and Filtering - Nov. 30, 2025</h2>
+                    <p>Search functions for apps and your needs.</p>
+                </div>
+            </div>
+            <div class="roadmap-item unfinished">
+                <div class="dot"></div>
+                <div class="content">
+                    <h2>User Reviews and Ratings - Dec. 30, 2025</h2>
+                    <p>Add a feature for users to leave reviews and ratings for the apps to build a community-driven platform where users can share their experiences and insights.</p>
+                </div>
+            </div>              
+            <div class="roadmap-item unfinished">
+                <div class="dot"></div>
+                <div class="content">
+                    <h2>Real-time News - Jan. 30, 2026</h2>
+                    <p>Real-time trends, updates, and news in the AI and startup world.</p>
+                </div>
+            </div>          
+            <div class="roadmap-item unfinished">
+                <div class="dot"></div>
+                <div class="content">
+                    <h2>Discussion Forum - March 1, 2026</h2>
+                    <p>Discussion forum for indie hackers.</p>
+                </div>
+            </div>
+            <div class="roadmap-item unfinished">
+                <div class="dot"></div>
+                <div class="content">
+                    <h2>More in the future</h2>
+                    <p>More for indie hackers.</p>
+                </div>
+            </div>            
+        </div>
+    </div>
+</main>

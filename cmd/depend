@@ -1,0 +1,5 @@
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+
+
+npm install pm2 -g

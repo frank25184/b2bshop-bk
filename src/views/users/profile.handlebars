@@ -1,0 +1,141 @@
+{{#extend "css"}}
+<style>
+  h2{font-size:1.1rem;margin-bottom:2rem;}
+  h2.active{
+    border-bottom: 4px solid #f8ce5f;
+    padding-bottom:1rem; 
+  }
+  .author_image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f5d907, #000000);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .userLogo {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    transition: transform 0.3s;
+  }
+  .userLogo:hover {
+    transform: scale(1.1);
+  }
+  .author__name{margin-top:1.5rem!important;}
+  .verifyInfo{color: red;font-weight: bold;}
+  .tab-link {
+    text-decoration: none;
+    color: #6c757d;
+  }
+  .tab-link.active {
+    color: #0d6efd;
+    border-bottom: 3px solid #0d6efd;
+    font-weight: 600;
+  }
+  .tab-link:hover {
+    color: #0d6efd;
+  }
+  .shadow-sm{
+    box-shadow:none!important;
+    border:0;
+    margin-top:70px;
+  }
+h2.active {
+    border-bottom: 0 solid transparent;
+    padding-bottom: rem;
+}
+
+</style>
+<meta name="robots" content="noindex">
+{{/extend}}
+
+<!-- begin author -->
+{{#if user}}
+  {{#if postUserEqual2LoginedUser}}
+    {{#unless user.isVerified}} 
+      <div class="container mt-4">
+        <div class="alert alert-danger">
+          <h5 class="alert-heading">
+            <i class="fas fa-exclamation-triangle me-2"></i>You're just one step away!
+          </h5>
+          <p class="mb-0 verifyInfo">Please check your email to verify your account.</p>
+        </div>
+      </div>
+    {{/unless}}
+  {{/if}}
+{{/if}}
+
+<!-- Profile Section -->
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body text-center py-5">
+          <!-- Profile Avatar -->
+          <div class="author_image mb-4">
+            {{#if postUser.admin}}
+              <span class="userLogo">{{postUser.namefirstLetter}}</span>
+            {{else}}
+              <span class="userLogo">{{postUser.namefirstLetter}}</span>
+            {{/if}}
+          </div>
+          
+          <!-- User Info -->
+          <h2 class="h3 mb-3 author__name">{{postUser.username}}</h2>
+          {{#if postUser.profile}}
+            <p class="text-muted mb-0">{{{postUser.profile}}}</p>
+          {{else}}
+            <p class="text-muted mb-0">{{postUser.username}} didn't have any Info!</p>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs Section -->
+  <div class="row justify-content-center mt-4" style="margin-top:0!important;">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-white" style="border-bottom:0px!important;">
+          <div class="row">
+            <div class="col">
+                <h2 class="active">
+                  <a href="/user/profile/{{postUser._id}}?tab=postedProducts" class="tab-link active d-inline-block py-3">
+                    <i class="fas fa-menu me-2"></i>Products Posted
+                  </a>
+                </h2>
+
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-body">
+            {{#if products.length}}
+              <!-- Products Grid -->
+              <div class="row g-4">
+                {{#each products}}
+                  <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card h-100 border-0 shadow-sm" style="margin-top:0">
+                      <div class="card-body" style="padding-top: 0;">
+                        {{> products/_product}}
+                      </div>
+                    </div>
+                  </div>
+                {{/each}}
+              </div>
+            {{else}}
+              <!-- Empty State -->
+              <div class="text-center py-5">
+                <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                <h5 class="text-muted">No products posted!</h5>
+              </div>
+            {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

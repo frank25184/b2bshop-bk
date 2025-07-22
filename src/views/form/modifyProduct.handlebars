@@ -1,0 +1,408 @@
+/{{#extend "css"}}
+<style>
+   h4.sb-mb-15{margin:4rem!important;font-size:1.5rem;}
+   .tip{text-align: left;color:grey}
+   .product-images {
+       display: flex;
+       flex-wrap: wrap;
+       gap: 10px;
+       margin-bottom: 20px;
+   }
+   .product-image {
+       width: 100px;
+       height: 100px;
+       object-fit: cover;
+       border: 1px solid #ddd;
+       border-radius: 4px;
+   }
+   .image-container {
+       position: relative;
+       display: inline-block;
+   }
+   .remove-image {
+       position: absolute;
+       top: -10px;
+       right: -10px;
+       background: red;
+       color: white;
+       border-radius: 50%;
+       width: 20px;
+       height: 20px;
+       text-align: center;
+       line-height: 20px;
+       cursor: pointer;
+   }
+</style>
+{{/extend}}
+
+<section class="sb-banner sb-banner-color">
+   <div class="container">
+      <div class="row align-items-center">
+         <div class="col-lg-12">
+            <div class="sb-contact-form-frame">
+               <div class="sb-form-content">
+                  <div class="sb-main-content">
+                     <h3 class="sb-mb-30">Modify Product</h3> <br> <br>
+                     <form class="form" action="/product/modify/{{product.pathName}}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <input type="hidden" name="_method" value="PUT">
+                        
+                        <!-- Display existing images -->
+                        {{#if product.imgs}}
+                        <div class="product-images">
+                           {{#each product.imgs}}
+                           <div class="image-container">
+                              <img src="/upload/products/thumbnail/{{this}}" alt="this" class="product-image">
+                              <input type="hidden" name="existingImages[]" value="{{this}}">
+                              <span class="remove-image" onclick="removeImage(this)">×</span>
+                           </div>
+                           {{/each}}
+                        </div>
+                        {{/if}}
+                        
+                        <div class="sb-group-input">
+                           {{!-- <input id="form-image" type="file" name="topIMG" placeholder="Product photos" accept="image/*" multiple style="padding-top:0.7rem;">
+                           <label>添加更多产品图片 Add More Product Photos</label> --}}
+                        </div>
+                        <button type="button" id="addImageBtn" class="sb-btn sb-btn-sm" style="margin-top:1rem;">
+                           + 添加产品图片 (Add Product Photos)
+                        </button>
+
+                        <!-- Pricing Variants -->
+                        <div class="sb-price-variants">
+                           <table class="sb-price-table">
+                              <thead>
+                                 <tr>
+                                    <th>颜色</th>
+                                    <th>价格</th>
+                                    <th>库存</th>
+                                    <th>重量</th>
+                                    <th>SKU</th>
+                                 </tr>
+                                 <tr class="sb-sub-header">
+                                    <th>Color</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Weight (kg)</th>
+                                    <th>SKU</th>
+                                 </tr>
+                              </thead>
+                              <tbody id="priceVariants">
+                                 {{#each product.pricing}}
+                                 <tr class="sb-variant-row">
+                                    <td><input type="text" name="pricing[{{@index}}][color]" class="form-control" value="{{this.color}}"></td>
+                                    <td><input type="number" name="pricing[{{@index}}][price]" step="0.01" class="form-control" min="0" value="{{this.price}}" required></td>
+                                    <td><input type="number" name="pricing[{{@index}}][stock]" class="form-control" min="0" value="{{this.stock}}" required></td>
+                                    <td><input type="number" name="pricing[{{@index}}][weight]" step="0.1" class="form-control" min="0" value="{{this.weight}}"></td>
+                                    <td><input type="text" name="pricing[{{@index}}][sku]" class="form-control" value="{{this.sku}}"></td>
+                                    <td><button type="button" class="sb-remove-variant btn btn-danger">×</button></td>
+                                 </tr>
+                                 {{/each}}
+                              </tbody>
+                           </table>
+                           <button type="button" id="addVariant" class="sb-btn sb-btn-sm sb-mt-10" style="margin-top:2rem;">
+                              <span class="sb-icon">+</span>
+                              添加规格 (Add Variant)
+                           </button>
+                        </div>
+                        <br>
+                        <!-- Categories -->
+                        <div class="sb-group-input cate">
+                        <select name="category[]" class="form-select" id="form-category-1" onchange="loadSubcategories(this.value, 1)">
+                            <option>Pick a Category</option>
+                        </select> <br>
+                        <select name="subcategory[]" class="form-select" id="form-subcategory-1" style="display: none;">
+                                <option>Pick a Subcategory</option>
+                        </select>  
+                        <button type="button" class="btn btn-primary btn-sm" onclick="addCategoryInput()">Add Another Category</button>
+                        </div>
+                        <script>
+                        var categories = {
+                        "electrotherapy": [
+                           "frequency electrotherapy devices"
+                        ],
+                        "bioresonance therapy": [
+                           "low frequency resonators"
+                        ],  
+                        "bioenergetic Therapy": [
+                           "bio energy terahertz devices"
+                        ], 
+                        "accessories": [
+                           "accessories"
+                        ],      
+                        };
+
+                        var categoryCount = 1;
+
+                        document.addEventListener('DOMContentLoaded', function() {
+                           console.log('DOMContentLoaded fired');
+                           console.log('Categories object:', categories);
+                           var categorySelects = document.querySelectorAll('select[id^="form-category"]');
+                           console.log('Found category selects:', categorySelects.length);
+                           populateCategories();
+                        });
+
+                        function populateCategories() {
+                           var categorySelects = document.querySelectorAll('select[id^="form-category"]');
+                           for (var i = 0; i < categorySelects.length; i++) {
+                              var categorySelect = categorySelects[i];
+                              for (var category in categories) {
+                                    var option = document.createElement('option');
+                                    option.value = category;
+                                    option.text = category; // Use 'text' for older browser compatibility
+                                    categorySelect.appendChild(option);
+                              }
+                           }
+                        }
+
+                        function loadSubcategories(category, index) {
+                           var subcategorySelect = document.getElementById('form-subcategory-' + index);
+
+                           if (category) {
+                              
+                              // Display the subcategory select element
+                              subcategorySelect.style.display = 'block';
+                              subcategorySelect.innerHTML = ''; // Clear previous subcategories
+
+                              // Check if the category has subcategories
+                              if (categories[category] && categories[category].length > 0) {
+                                    // Loop through the subcategories and append them as options
+                                    for (var subIndex = 0; subIndex < categories[category].length; subIndex++) {
+                                       var subcategory = categories[category][subIndex];
+                                       var option = document.createElement('option');
+                                       option.value = subcategory;
+                                       option.text = subcategory; // Use 'text' for older browser compatibility
+                                       subcategorySelect.appendChild(option);
+                                    }
+                                    // Set the first subcategory as the default selected option
+                                    subcategorySelect.value = categories[category][0];
+                              } else {
+                                    // If no subcategories, add a placeholder and hide the select
+                                    subcategorySelect.innerHTML = '<option value="">No Subcategories Available</option>';
+                                    subcategorySelect.style.display = 'none';
+                              }
+                           } else {
+                              // Hide the subcategory select element if the default option is selected
+                              subcategorySelect.style.display = 'none';
+                           }
+                        }
+
+                        function addCategoryInput() {
+                           categoryCount++;
+                           
+                           // Create new category select
+                           var newCategorySelect = document.createElement('select');
+                           newCategorySelect.name = 'category[]';
+                           newCategorySelect.className = 'form-select';
+                           newCategorySelect.id = 'form-category-' + categoryCount;
+                           newCategorySelect.setAttribute('onchange', 'loadSubcategories(this.value, ' + categoryCount + ')');
+                           
+                           // Create new subcategory select
+                           var newSubcategorySelect = document.createElement('select');
+                           newSubcategorySelect.name = 'subcategory[]';
+                           newSubcategorySelect.className = 'form-select';
+                           newSubcategorySelect.id = 'form-subcategory-' + categoryCount;
+                           newSubcategorySelect.style.display = 'none';
+
+                           // Append the new selects to the form group
+                           var formGroup = document.querySelector('.cate');
+                           formGroup.appendChild(newCategorySelect);
+                           formGroup.appendChild(newSubcategorySelect);
+
+                           // Populate the new category select
+                           populateCategories();
+                        }
+                        </script>
+                        <!-- Product Details -->
+                        <div class="sb-group-input">
+                           <input type="text" class="form-control" name="name" value="{{product.name}}" required>
+                           <label>产品名称 (Product Name) *</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <input type="text" name="manufacturer" class="form-control" value="{{product.manufacturer}}">
+                           <label>生产企业 (Manufacturer)</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <textarea name="intro" class="form-control" rows="5">{{product.intro}}</textarea>
+                           <label>简要介绍</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <textarea name="content" id="editor" class="form-control" rows="5">{{product.content}}</textarea>
+                           <label>详细产品介绍 (Content) *</label>
+                        </div>
+
+                        <!-- SEO Section -->
+                        <h4 class="sb-mb-15">SEO Descriptions</h4>
+                        <div class="sb-group-input">
+                           <input type="text" name="seoTitle" class="form__input" id="seoTitle" maxlength="60" value="{{product.seoTitle}}">
+                           <span id="titleCount" class="char-count">{{product.seoTitle.length}}/60</span>
+                           <label class="form__label" for="seoTitle">Title *</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <textarea name="seoDescription" class="form__input" id="seoDescription" maxlength="160">{{product.seoDescription}}</textarea>
+                           <span id="descriptionCount" class="char-count">{{product.seoDescription.length}}/160</span>
+                           <label class="form__label" for="seoDescription">Meta Description *</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <input type="text" name="seoKeyword" class="form-control" value="{{product.seoKeyword}}">
+                           <label>Keywords (comma separated)</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <input type="text" name="pathName" class="form-control" value="{{product.pathName}}">
+                           <label>URL 格式</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <button type="submit" class="sb-btn sb-m-0">
+                              <span class="sb-icon">
+                                 <span class="sb-icon-arrow-1"></span>
+                              </span>
+                              <span>Update Product</span>
+                           </button>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+{{#extend "js"}}
+<script>
+// Function to remove an image
+function removeImage(element) {
+   if (confirm('Are you sure you want to remove this image?')) {
+      const container = element.parentElement;
+      container.parentElement.removeChild(container);
+   }
+}
+
+// Add variant row
+let variantIndex = {{../product.pricing.length}} || 1;
+document.getElementById('addVariant').addEventListener('click', () => {
+   const tbody = document.getElementById('priceVariants');
+   const newRow = document.createElement('tr');
+   newRow.className = 'sb-variant-row';
+   newRow.innerHTML = `
+      <td><input type="text" name="pricing[${variantIndex}][color]" class="form-control"></td>
+      <td><input type="number" name="pricing[${variantIndex}][price]" step="0.01" class="form-control" min="0" required></td>
+      <td><input type="number" name="pricing[${variantIndex}][stock]" class="form-control" min="0" required></td>
+      <td><input type="number" name="pricing[${variantIndex}][weight]" step="0.1" class="form-control" min="0"></td>
+      <td><input type="text" name="pricing[${variantIndex}][sku]" class="form-control"></td>
+      <td><button type="button" class="sb-remove-variant btn btn-danger">×</button></td>
+   `;
+   tbody.appendChild(newRow);
+   variantIndex++;
+});
+
+// Remove variant row
+document.addEventListener('click', (e) => {
+   if (e.target.classList.contains('sb-remove-variant')) {
+      if (document.querySelectorAll('.sb-variant-row').length > 1) {
+         e.target.closest('tr').remove();
+      } else {
+         alert('At least one variant is required');
+      }
+   }
+});
+
+// Character counters
+document.getElementById('seoTitle').addEventListener('input', function() {
+   document.getElementById('titleCount').textContent = this.value.length + '/60';
+});
+
+document.getElementById('seoDescription').addEventListener('input', function() {
+   document.getElementById('descriptionCount').textContent = this.value.length + '/160';
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js" integrity="sha512-eV68QXP3t5Jbsf18jfqT8xclEJSGvSK5uClUuqayUbF5IRK8e2/VSXIFHzEoBnNcvLBkHngnnd3CY7AFpUhF7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.sb-group-input');   // 原来存放文件输入的 div
+  const btn       = document.getElementById('addImageBtn');
+
+  btn.addEventListener('click', () => {
+    // 生成唯一 id，避免多次点击产生重复 id
+    const uniqueId = 'form-image-' + Date.now();
+
+    const input = document.createElement('input');
+    input.type  = 'file';
+    input.id    = uniqueId;               // 原本是 form-image，改成唯一值
+    input.name  = 'topIMG';               // 如果要一次提交多图可改 topIMG[]
+    input.placeholder = 'Product photos';
+    input.accept = 'image/*';
+    input.multiple = true;                // 支持一次选多张
+    input.style.paddingTop = '0.7rem';
+
+    container.appendChild(input);
+  });
+});
+
+   (function() {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
+    const domain = isLocalhost 
+        ? `${protocol}//${hostname}:${port}`
+        : `${protocol}//${hostname}${port ? ':' + port : ''}`;
+    console.log("domain: ",domain);
+    let returnFile = function(res){
+      return domain + "/upload/products/" + res.data.filename;
+    } 
+    tinymce.init({
+      selector: '#editor',
+      plugins: 'image link table advtable preview',
+      toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code link table preview |  image',
+      table_class_list: [
+      { title: 'Default', value: 'table table-bordered' },
+      { title: 'Striped', value: 'table table-bordered table-striped' },
+      { title: 'Hover', value: 'table table-bordered table-hover' }
+      ], 
+      relative_urls: false,
+      remove_script_host: false,      
+      images_upload_handler: (blobInfo, success, failure) => {
+        const formData = new FormData();
+        formData.append('image', blobInfo.blob(), blobInfo.filename());
+
+        axios.post('/admin/upload2product', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+          .then(response => success(returnFile(response)))
+          .catch(error => failure('Image upload failed: ' + error));
+      },
+      file_picker_callback: (callback, value, meta) => {
+        if (meta.filetype === 'image') {
+          const input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          input.setAttribute('accept', 'image/*');
+          input.onchange = () => {
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+            axios.post('/admin/upload2product', formData, {
+              headers: { 'Content-Type': 'multipart/form-data' }
+            })
+              .then(response => {
+                callback(returnFile(response));
+              })
+              .catch(error => console.error(error));
+          };
+          input.click();
+        }
+      }
+    });
+   })();
+</script>
+{{/extend}}

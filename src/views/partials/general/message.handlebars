@@ -1,0 +1,55 @@
+    
+<style>
+    .alert{
+        top: 120px;
+        text-align:center;
+        
+    }
+    @media (max-width: 992px){
+        .alert{
+            top: 90px; 
+        }
+    }
+</style>
+{{#if messages }}
+    {{#if messages.error }}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ messages.error }}
+            {{!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> --}}
+        </div>
+    {{/if}}
+    {{#if messages.success}}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ messages.success }}
+            {{!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> --}}
+        </div>
+    {{/if}}
+    {{#if messages.info}}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ messages.info }}
+            {{!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> --}}
+        </div>
+    {{/if}}
+{{/if}}
+
+
+    <script>
+Array.from(document.getElementsByClassName('alert')).forEach(function (message) {
+    if (message) {
+      function disappear() {
+        message.style.display = 'none';
+      }
+      
+      setTimeout(disappear, 2000);
+
+     // document.querySelector('.delete').addEventListener('click', {
+       // handleEvent: function(event) {
+         // const parent = event.target.parentNode;
+          //parent.style.display = 'none';
+       // }
+      //});
+    }
+});
+    </script>
+
+

@@ -1,0 +1,111 @@
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+
+sudo apt-get update -y
+sudo apt-get install gnupg -y
+
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+
+echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+
+
+sudo apt-get update -y
+sudo apt-get install -y mongodb-org
+
+# mongo "mongodb://admin:${Roger548331198}@localhost:27017/admin?authSource=admin"
+cp /etc/mongod.conf /etc/mongod.conf.backup
+
+#Then select the appropriate tab below based on the result:
+#systemd - select the systemd (systemctl) tab below.
+#init - select the System V Init (service) tab below.//
+ps --no-headers -o comm 1
+
+
+rm  /tmp/mongodb-27017.sock 
+echo "if systemd:"
+sudo systemctl start mongod
+sudo systemctl status mongod
+sudo systemctl enable mongod
+
+#https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-debian/
+
+# sudo systemctl daemon-reload
+# sudo systemctl unmask mongodb
+
+# sudo systemctl stop mongod
+# sudo systemctl restart mongod
+
+
+# sudo service mongodb restart
+
+
+
+
+echo "adding  authority... "
+
+# echo "Step1: Start MongoDB without access control"  
+# final: user: shopAdminUser / pw: shp_505055    
+echo "open another cmd with:
+ use admin
+ db.createUser(
+   {
+     user: "shopAdminUser",
+     pwd: passwordPrompt(), 
+     roles: [
+       { role: "userAdminAnyDatabase", db: "admin" },
+       { role: "readWriteAnyDatabase", db: "admin" }
+     ]
+   }
+ )"
+mongo --port 27017 
+echo "open another window and Shut down the mongod instance      using the command[ ps aux | grep mongod 和   sudo kill -9 15255 ) ] or   just using ctr+c in step 1"
+
+
+echo "Start the mongod with access control enabled. and add --fork to make it run behind; bind_ip_all for out linking using Compass tool" 
+mongod --auth --port 27017 --bind_ip_all  --dbpath /var/lib/mongodb  --logpath /var/log/mongod-fork.log --fork
+
+
+echo "Start mongosh with the  -u <username>, -p, and the --authenticationDatabase <database> command line options:"
+mongo --port 27017 --authenticationDatabase "admin" -u "shopAdminUser" -p
+echo "then create user : "
+echo " 
+use admin 
+      #very important so that it could be admin.frank
+db.createUser({user: 'frank', pwd: 'Frank_24681', roles: [{role: 'dbAdmin', db: 'b2bshop'}, {role: 'dbOwner', db: 'b2bshop'}]});" 
+
+
+
+
+
+# echo 'add --fork to make it run behind'
+# mongod --auth --port 27018 --dbpath /var/lib/mongodb --logpath /var/log/mongod-fork.log
+
+
+
+
+#echo "add : security:      authorization: enabled to the mongod.conf"
+#vi /etc/mongod.conf
+
+
+
+
+# echo "command:
+#  use admin
+#  db.createUser({user: 'admin', pwd: 'Roger_548331198', roles: [{role: 'userAdminAnyDatabase', db: 'admin'}]});
+#  quit using control D
+
+#  mongo mongodb://localhost:27017
+#  db.auth('admin', 'Roger_548331198')
+#  db.createUser({user: 'frank', pwd: 'Frank548331198', roles: [{role: 'dbAdmin', db: 'dapphz'}, {role: 'dbOwner', db: 'dapphz'}]});
+
+#   quit using control D
+# "
+
+
+
+
+
+##https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-debian/
+# https://www.mongodb.com/docs/manual/tutorial/create-users/
+# https://www.mongodb.com/docs/manual/tutorial/configure-scram-client-authentication/
+# https://www.mongodb.com/docs/manual/tutorial/manage-mongodb-processes/

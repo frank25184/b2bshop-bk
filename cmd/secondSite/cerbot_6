@@ -1,0 +1,8 @@
+
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+
+echo "follow instructions: https://certbot.eff.org/instructions?ws=apache&os=debianbuster"
+sudo certbot --nginx
+
+#https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/

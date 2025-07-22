@@ -1,0 +1,57 @@
+{{#extend "css"}}
+    <style>
+       .Error404{
+        width:100%;
+        margin:0 auto;
+        padding:10%;
+       }
+        h1 {
+            color: #555;
+            font-size: 2em;
+            font-weight: 400;
+            text-align: center;
+        }
+        .Error404 p{
+            text-align: center;
+        }
+        .Error404  ul {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        }
+
+        .Error404  ul li {
+        display: inline-block; 
+        margin-right: 20px; 
+
+        }
+        ul li a{color: #f8ce5f; font-weight: 700;}
+        @media only screen and (max-width: 280px) {
+
+          .Error404  h1 {
+                font-size: 1.5em;
+                margin: 0 0 0.3em;
+          }
+
+        }
+
+    </style>
+    <meta name="robots" content="noindex">
+{{/extend}}
+
+     <div class="Error404 content">
+    <h1>Page Not Found</h1>
+    <p>Sorry, We Lost the Page. Or you could visit:</p>
+    <ul>
+        <li><a href="/">Home</a></li>
+        {{#if user}}
+        <li><a href="/issues">AI Newsletter</a></li>
+        {{!-- <li><a href="/user/profile/{{user._id}}?tab=upvotedProducts">AI Newsletter</a></li> --}}
+        {{else}}
+        <li><a href="/user/profile/{{user._id}}">Your Profile</a></li>
+        {{/if}}
+        {{#if user}}
+        <li><a href="/user/profile/{{user._id}}?tab=apps">Your AI Tools Hunted</a></li>
+        {{/if}}
+    </ul>
+     </div>

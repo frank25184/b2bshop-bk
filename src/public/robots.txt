@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /user/profile/
+Disallow: /profile/
+Disallow: /user/signup
+Disallow: /user/login
+Disallow: /admin/
+Disallow: /cmd/
+
+# Allow: /
+Disallow: /
+Sitemap: https://minshengmedical.com/sitemap.xml

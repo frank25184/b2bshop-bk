@@ -1,0 +1,18 @@
+{
+        "smart home": [
+        "environmental quality",
+        "security and safety",
+        "entertainment",
+        "home appliances"
+        ],
+        "healthcare & wellness": [
+        "wearable devices",
+        "fitness equipment",
+        "personal care & Therapy",
+        "telehealth services"
+        ],
+        "entertainment & media": [
+        "gaming consoles and accessories",
+        "smart audio & visual"
+        ]
+}

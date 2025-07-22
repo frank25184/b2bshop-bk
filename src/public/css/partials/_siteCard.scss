@@ -1,0 +1,9 @@
+@media screen and (min-width: 1024px){
+    .siteCard .infoRight{
+     text-align: right!important;
+    } 
+}
+
+.siteCard .siteName{
+    width:96px;height:96px;background-color:rgb(153, 182, 153);color:white;text-align:center;padding:0.3rem;  overflow: hidden;white-space: nowrap;
+}

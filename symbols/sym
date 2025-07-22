@@ -1,0 +1,13 @@
+/** + **/
+<svg class="pt-1 text-green-400 shrink-0 size-5" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.66659 6.33331H13.6666V7.66665H7.66659V13.6666H6.33325V7.66665H0.333252V6.33331H6.33325V0.333313H7.66659V6.33331Z" fill="currentColor"></path>
+</svg>
+
+
+/** - **/
+<svg class="pt-1 text-red-400 shrink-0 size-4" width="14" height="2" viewBox="0 0 14 2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6666 0.333313V1.66665H0.333252V0.333313H13.6666Z" fill="currentColor"></path>
+    </svg>
+
+
+

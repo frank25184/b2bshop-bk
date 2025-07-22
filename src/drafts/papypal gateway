@@ -1,0 +1,87 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const paypal = require('paypal-rest-sdk');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+paypal.configure({
+  mode: 'sandbox', // or 'live'
+  client_id: 'YOUR_CLIENT_ID',
+  client_secret: 'YOUR_CLIENT_SECRET'
+});
+
+app.post('/pay', (req, res) => {
+  const create_payment_json = {
+    intent: 'payment',
+    payer: {
+      payment_method: 'paypal'
+    },
+    redirect_urls: {
+      return_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000/cancel'
+    },
+    transactions: [{
+      item_list: {
+        items: [{
+          name: 'item',
+          sku: 'item',
+          price: req.body.price,
+          currency: 'USD',
+          quantity: 1
+        }]
+      },
+      amount: {
+        currency: 'USD',
+        total: req.body.price
+      },
+      description: 'This is the payment description.'
+    }]
+  };
+
+  paypal.payment.create(create_payment_json, (error, payment) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send(error);
+    } else {
+      for (let i = 0; i < payment.links.length; i++) {
+        if (payment.links[i].rel === 'approval_url') {
+          res.json({ approval_url: payment.links[i].href });
+        }
+      }
+    }
+  });
+});
+
+app.get('/success', (req, res) => {
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+
+  const execute_payment_json = {
+    payer_id: payerId,
+    transactions: [{
+      amount: {
+        currency: 'USD',
+        total: req.body.price
+      }
+    }]
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json, (error, payment) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send(error);
+    } else {
+      res.send('Payment completed successfully!');
+    }
+  });
+});
+
+app.get('/cancel', (req, res) => {
+  res.send('Payment canceled.');
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});

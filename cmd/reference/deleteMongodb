@@ -1,0 +1,10 @@
+
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+sudo service mongod stop
+echo "Remove any MongoDB packages that you had previously installed."
+sudo apt-get purge mongodb-org*
+
+echo "Remove MongoDB databases and log files."
+sudo rm -r /var/log/mongodb
+sudo rm -r /var/lib/mongodb

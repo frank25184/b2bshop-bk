@@ -1,0 +1,15 @@
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+
+echo "for the latest nodejs version dependancy"
+sudo apt-get install curl software-properties-common -y
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash - 
+
+
+echo "install nodejs  (v16.15.1 better)"
+sudo apt install nodejs -y
+
+cd /sites/b2bshop
+npm i -g pnpm
+pnpm install
+ 

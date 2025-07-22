@@ -1,0 +1,77 @@
+       <style>
+        @media (max-width: 767px) {
+          .sb-main-title ul, .sb-main-title p {
+            text-align: left;
+          }
+        }
+       </style>
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-7">
+              <!-- main title -->
+              <div class="sb-main-title-frame">
+                <div class="sb-main-title">
+                  <span class="sb-suptitle sb-mb-30">Contact</span>
+                  <h1 class="sb-mb-30">Get in <span>Touch with US</span></h1>
+                  <p class="sb-text sb-text-lg sb-mb-30">We Manufacture and Provide Medical Devices All Over the World</p>
+                  {{#unless isHome}}
+                  <ul class="sb-text sb-text-lg sb-mb-30">
+                   <li><b>• Head Office: Hangzhou Mingsheng Medical Technology Co., Ltd.</b> <br>Building B, 1 floor, Maxi Hi-tech Park, Linan district, Hangzhou, China</li> <br>
+                   <li><b>• Factory: Guangzhou Mingsheng Medical Technology Co., Ltd.</b> <br>Building 1, No. 11, Tongfu road, Renhe town, Baiyun district, Guangzhou, China</li>
+                  </ul>
+                  {{/unless}}
+                  <ul class="sb-breadcrumbs">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/support/contact">Contact</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- main title end -->
+            </div>
+            <div class="col-lg-5">
+              <div class="sb-contact-form-frame">
+                <div class="sb-illustration-9">
+                  <div class="sb-cirkle-1"></div>
+                  <div class="sb-cirkle-2"></div>
+                  <div class="sb-cirkle-3"></div>
+                </div>
+                <div class="sb-form-content">
+                  <div class="sb-main-content">
+                    <h3 class="sb-mb-30">Contact</h3>
+                    <form id="contactForm" action="/user/postContact" method="POST">
+                      <div class="sb-group-input">
+                        <input type="text" name="name" required="">
+                        <span class="sb-bar"></span>
+                        <label>Your Name</label>
+                      </div>
+                      <div class="sb-group-input">
+                        <input type="email" name="email" required="">
+                        <span class="sb-bar"></span>
+                        <label>Your Email</label>
+                      </div>
+                      <div class="sb-group-input">
+                        <textarea name="message" required=""></textarea>
+                        <span class="sb-bar"></span>
+                        <label>Your Message</label>
+                      </div>
+                      <p class="sb-text sb-text-xs sb-mb-30">*We promise not to disclose your <br>personal information to third parties.</p>
+                      <!-- button -->
+                      <button class="sb-btn sb-cf-submit sb-show-success" type="submit">
+                        <span class="sb-icon">
+                          <img src="/images/picture/arrow.svg" alt="icon">
+                        </span>
+                        <span>Quote</span>
+                      </button>
+                      <!-- button end -->
+                    </form>
+                  </div>
+                  <div class="sb-success-result">
+                    <img src="/images/picture/success.jpg" alt="success" class="sb-mb-15">
+                    <div class="sb-success-title sb-mb-15">Success!</div>
+                    <p class="sb-text sb-mb-15">Your quote has been sent <br>successfully.We'll contact you ASAP</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

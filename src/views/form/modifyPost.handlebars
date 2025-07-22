@@ -1,0 +1,366 @@
+/{{#extend "css"}}
+<style>
+   h4.sb-mb-15{margin:4rem!important;font-size:1.5rem;}
+   .tip{text-align: left;color:grey}
+   .product-images {
+       display: flex;
+       flex-wrap: wrap;
+       gap: 10px;
+       margin-bottom: 20px;
+   }
+   .product-image {
+       width: 100px;
+       height: 100px;
+       object-fit: cover;
+       border: 1px solid #ddd;
+       border-radius: 4px;
+   }
+   .image-container {
+       position: relative;
+       display: inline-block;
+   }
+   .remove-image {
+       position: absolute;
+       top: -10px;
+       right: -10px;
+       background: red;
+       color: white;
+       border-radius: 50%;
+       width: 20px;
+       height: 20px;
+       text-align: center;
+       line-height: 20px;
+       cursor: pointer;
+   }
+</style>
+{{/extend}}
+
+<section class="sb-banner sb-banner-color">
+   <div class="container">
+      <div class="row align-items-center">
+         <div class="col-lg-12">
+            <div class="sb-contact-form-frame">
+               <div class="sb-form-content">
+                  <div class="sb-main-content">
+                     <h3 class="sb-mb-30">Modify Post</h3> <br> <br>
+                     <form class="form" action="/article/modify/{{post.pathName}}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        {{!-- <input type="hidden" name="_method" value="PUT"> --}}
+                        
+                        <!-- Display existing images -->
+                        {{#if post.topIMG}}
+                        <div class="product-images">
+                           <div class="image-container">
+                              <img src="/upload/articles/thumbnail/{{post.topIMG}}" alt="this" class="product-image">
+                              <input type="hidden" name="existingImages[]" value="{{post.topIMG}}">
+                              <span class="remove-image" onclick="removeImage(this)">×</span>
+                           </div>
+                        </div>
+                        {{/if}}
+                        
+                        <div class="sb-group-input">
+                           {{!-- <input id="form-image" type="file" name="topIMG" placeholder="Product photos" accept="image/*" multiple style="padding-top:0.7rem;">
+                           <label>添加更多产品图片 Add More Product Photos</label> --}}
+                        </div>
+                        <button type="button" id="addImageBtn" class="sb-btn sb-btn-sm" style="margin-top:1rem;">
+                           + 添加产品图片 (Add Product Photos)
+                        </button>
+
+                        <!-- Categories -->
+                        <div class="sb-group-input cate">
+                        <select name="category" class="form-select" id="form-category-1" onchange="loadSubcategories(this.value, 1)">
+                            <option>Pick a Category</option>
+                        </select> <br>
+                        <select name="subcategory" class="form-select" id="form-subcategory-1" style="display: none;">
+                                <option>Pick a Subcategory</option>
+                        </select>  
+                        </div>
+                        <script>
+                        var categories = {
+                        "electrotherapy": [
+                           "frequency electrotherapy devices"
+                        ],
+                        "bioresonance therapy": [
+                           "low frequency resonators"
+                        ],  
+                        "bioenergetic Therapy": [
+                           "bio energy terahertz devices"
+                        ], 
+                        "accessories": [
+                           "accessories"
+                        ],      
+                        };
+
+                        var categoryCount = 1;
+
+                        document.addEventListener('DOMContentLoaded', () => {
+                           console.log('DOMContentLoaded fired');
+                           console.log('Categories object:', categories);
+                           var categorySelects = document.querySelectorAll('select[id^="form-category"]');
+                           console.log('Found category selects:', categorySelects.length);
+                           populateCategories();
+                        });
+
+                        function populateCategories() {
+                           var categorySelects = document.querySelectorAll('select[id^="form-category"]');
+                           for (var i = 0; i < categorySelects.length; i++) {
+                              var categorySelect = categorySelects[i];
+                              for (var category in categories) {
+                                    var option = document.createElement('option');
+                                    option.value = category;
+                                    option.text = category; // Use 'text' for older browser compatibility
+                                    categorySelect.appendChild(option);
+                              }
+                           }
+                        }
+
+                        function loadSubcategories(category, index) {
+                           var subcategorySelect = document.getElementById('form-subcategory-' + index);
+
+                           if (category) {
+                              
+                              // Display the subcategory select element
+                              subcategorySelect.style.display = 'block';
+                              subcategorySelect.innerHTML = ''; // Clear previous subcategories
+
+                              // Check if the category has subcategories
+                              if (categories[category] && categories[category].length > 0) {
+                                    // Loop through the subcategories and append them as options
+                                    for (var subIndex = 0; subIndex < categories[category].length; subIndex++) {
+                                       var subcategory = categories[category][subIndex];
+                                       var option = document.createElement('option');
+                                       option.value = subcategory;
+                                       option.text = subcategory; // Use 'text' for older browser compatibility
+                                       subcategorySelect.appendChild(option);
+                                    }
+                                    // Set the first subcategory as the default selected option
+                                    subcategorySelect.value = categories[category][0];
+                              } else {
+                                    // If no subcategories, add a placeholder and hide the select
+                                    subcategorySelect.innerHTML = '<option value="">No Subcategories Available</option>';
+                                    subcategorySelect.style.display = 'none';
+                              }
+                           } else {
+                              // Hide the subcategory select element if the default option is selected
+                              subcategorySelect.style.display = 'none';
+                           }
+                        }
+
+                        </script>
+                        <!-- Product Details -->
+                        <div class="sb-group-input">
+                           <input type="text" class="form-control" name="name" value="{{post.title}}" required>
+                           <label>Title *</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <textarea name="intro" class="form-control" rows="5">{{post.intro}}</textarea>
+                           <label>简要介绍</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <textarea name="content" id="editor" class="form-control" rows="5">{{post.content}}</textarea>
+                           <label>详细介绍 (Content) *</label>
+                        </div>
+
+                        <!-- SEO Section -->
+                        <h4 class="sb-mb-15">SEO Descriptions</h4>
+                        <div class="sb-group-input">
+                           <input type="text" name="seoTitle" class="form__input" id="seoTitle" maxlength="60" value="{{post.seoTitle}}">
+                           <span id="titleCount" class="char-count">{{post.seoTitle.length}}/60</span>
+                           <label class="form__label" for="seoTitle">Title *</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <textarea name="seoDescription" class="form__input" id="seoDescription" maxlength="160">{{post.seoDescription}}</textarea>
+                           <span id="descriptionCount" class="char-count">{{post.seoDescription.length}}/160</span>
+                           <label class="form__label" for="seoDescription">Meta Description *</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <input type="text" name="seoKeywords" class="form-control" value="{{post.seoKeywords}}">
+                           <label>Keywords (comma separated)</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <input type="text" name="pathName" class="form-control" value="{{post.pathName}}">
+                           <label>URL 格式</label>
+                        </div>
+
+                        <div class="sb-group-input">
+                           <button type="submit" class="sb-btn sb-m-0">
+                              <span class="sb-icon">
+                                 <span class="sb-icon-arrow-1"></span>
+                              </span>
+                              <span>Update Post</span>
+                           </button>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+{{#extend "js"}}
+<script>
+// Function to remove an image
+function removeImage(element) {
+    if (confirm('Are you sure you want to remove this image?')) {
+        const container = element.closest('.image-container');
+        if (container) {
+            // 如果删除的是已存在的图片，添加一个隐藏字段标记删除
+            const existingImage = container.querySelector('input[name="existingImages[]"]');
+            if (existingImage) {
+                const deleteInput = document.createElement('input');
+                deleteInput.type = 'hidden';
+                deleteInput.name = 'deletedImages[]';
+                deleteInput.value = existingImage.value;
+                container.parentNode.insertBefore(deleteInput, container);
+            }
+            container.remove();
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.sb-group-input');   // 原来存放文件输入的 div
+  const btn       = document.getElementById('addImageBtn');
+
+  btn.addEventListener('click', () => {
+    // 生成唯一 id，避免多次点击产生重复 id
+    const uniqueId = 'form-image-' + Date.now();
+
+    const input = document.createElement('input');
+    input.type  = 'file';
+    input.id    = uniqueId;               // 唯一 id 方便调试
+    input.name  = 'topIMG';               // 文章顶部图片字段
+    input.placeholder = 'Post top image';
+    input.accept = 'image/*';
+    input.style.paddingTop = '0.7rem';
+
+    container.appendChild(input);
+  });
+
+   fileInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (!file) return;
+      
+      const imagesContainer = document.querySelector('.product-images');
+      
+      // 清空现有的图片预览
+      const existingContainers = imagesContainer.querySelectorAll('.image-container');
+      existingContainers.forEach(container => container.remove());
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'image-container';
+            
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'product-image';
+            
+            const removeBtn = document.createElement('span');
+            removeBtn.className = 'remove-image';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = function() {
+               imageContainer.remove();
+               fileInput.value = '';
+            };
+            
+            imageContainer.appendChild(img);
+            imageContainer.appendChild(removeBtn);
+            imagesContainer.appendChild(imageContainer);
+      };
+      reader.readAsDataURL(file);
+   });
+
+   // 触发文件选择
+   document.body.appendChild(fileInput);
+   fileInput.click();
+
+   // 清理临时创建的文件输入
+   fileInput.addEventListener('cancel', () => {
+      document.body.removeChild(fileInput);
+   });
+
+   fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+            document.body.removeChild(fileInput);
+      }
+   }, { once: true });
+});
+
+// Character counters
+document.getElementById('seoTitle').addEventListener('input', function() {
+   document.getElementById('titleCount').textContent = this.value.length + '/60';
+});
+document.getElementById('seoDescription').addEventListener('input', function() {
+   document.getElementById('descriptionCount').textContent = this.value.length + '/160';
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js" integrity="sha512-eV68QXP3t5Jbsf18jfqT8xclEJSGvSK5uClUuqayUbF5IRK8e2/VSXIFHzEoBnNcvLBkHngnnd3CY7AFpUhF7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+   (function() {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
+    const domain = isLocalhost 
+        ? `${protocol}//${hostname}:${port}`
+        : `${protocol}//${hostname}${port ? ':' + port : ''}`;
+    console.log("domain: ",domain);
+    let returnFile = function(res){
+      return domain + "/upload/articles/" + res.data.filename;
+    } 
+    tinymce.init({
+      selector: '#editor',
+      plugins: 'image link table advtable preview',
+      toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code link table preview |  image',
+      table_class_list: [
+      { title: 'Default', value: 'table table-bordered' },
+      { title: 'Striped', value: 'table table-bordered table-striped' },
+      { title: 'Hover', value: 'table table-bordered table-hover' }
+      ], 
+      relative_urls: false,
+      remove_script_host: false,      
+      images_upload_handler: (blobInfo, success, failure) => {
+        const formData = new FormData();
+        formData.append('image', blobInfo.blob(), blobInfo.filename());
+
+        axios.post('/admin/upload2article', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+          .then(response => success(returnFile(response)))
+          .catch(error => failure('Image upload failed: ' + error));
+      },
+      file_picker_callback: (callback, value, meta) => {
+        if (meta.filetype === 'image') {
+          const input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          input.setAttribute('accept', 'image/*');
+          input.onchange = () => {
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+            axios.post('/admin/upload2article', formData, {
+              headers: { 'Content-Type': 'multipart/form-data' }
+            })
+              .then(response => {
+                callback(returnFile(response));
+              })
+              .catch(error => console.error(error));
+          };
+          input.click();
+        }
+      }
+    });
+   })();
+</script>
+{{/extend}}

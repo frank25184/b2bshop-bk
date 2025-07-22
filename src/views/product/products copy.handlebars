@@ -1,0 +1,173 @@
+      {{#extend "css"}}
+       <style>
+/* 主分类样式 */
+.sb-main-categories {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.sb-main-categories .sb-filter-link {
+  font-size: 18px;
+  font-weight: 600;
+  color: #666;
+  padding: 0 14px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: 2px solid #eee;
+}
+
+.sb-main-categories .sb-filter-link:hover,
+.sb-main-categories .sb-filter-link.sb-active {
+  background: #9CCC65;
+  color: #fff;
+  border-color: #9CCC65;
+}
+
+/* 子分类样式 */
+.sb-sub-categories {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.sb-sub-categories .sb-filter-link {
+  font-size: 14px;
+  color: #888;
+  padding: 0 15px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  background: #f5f5f5;
+}
+
+.sb-sub-categories .sb-filter-link:hover,
+.sb-sub-categories .sb-filter-link.sb-active {
+  background: #666;
+  color: #fff;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .sb-main-categories,
+  .sb-sub-categories {
+    flex-wrap: wrap;
+  }
+  
+  .sb-main-categories .sb-filter-link {
+    font-size: 16px;
+    padding: 8px 15px;
+  }
+  
+  .sb-sub-categories .sb-filter-link {
+    font-size: 13px;
+    padding: 5px 12px;
+  }
+}
+       </style>
+      {{/extend}}
+      <!-- banner -->
+      <section class="sb-banner sb-banner-sm sb-banner-color">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- main title -->
+              <div class="sb-main-title-frame">
+                <div class="sb-main-title text-center">
+                  <span class="sb-suptitle sb-mb-30">Menu</span>
+                  <h1 class="sb-mb-30">Only <span>appetite</span> <br>Can be lacking in <span>cooking</span></h1>
+                  <p class="sb-text sb-text-lg sb-mb-30">Consectetur numquam poro nemo veniam<br>eligendi rem adipisci quo modi.</p>
+                  {{!-- <ul class="sb-breadcrumbs">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu-1.html">Menu</a></li>
+                  </ul> --}}
+                </div>
+              </div>
+              <!-- main title end -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- banner end -->
+
+      <!-- menu section 1 -->
+      <section class="sb-menu-section sb-p-90-60">
+        <div class="sb-bg-1">
+          <div></div>
+        </div>
+        <div class="container">
+          <!-- filter -->
+          <div class="sb-filter mb-30">
+            <div class="sb-main-categories mb-3">
+              <a href="#" data-filter="*" class="sb-filter-link sb-active">All Categories</a>
+              <a href="#" data-filter=".starters" class="sb-filter-link">Starters</a>
+              <a href="#" data-filter=".main-dishes" class="sb-filter-link">Main </a>
+              <a href="#" data-filter=".drinks" class="sb-filter-link">Drinks</a>
+              <a href="#" data-filter=".desserts" class="sb-filter-link">Dessert</a>
+            </div>
+            <div class="sb-sub-categories" style="display: none;">
+              <!-- Subcategories will be dynamically populated -->
+            </div>
+          </div>
+          <!-- filter end -->
+          <div class="sb-masonry-grid">
+            <div class="sb-grid-sizer"></div>
+            <div class="sb-grid-item sb-item-33 main-dishes meat">
+              <a data-fancybox="menu" data-no-swup="" href="/images/picture/16.jpg" class="sb-menu-item sb-mb-30">
+                <div class="sb-cover-frame">
+                  <img src="/images/picture/16.jpg" alt="product">
+                </div>
+                <div class="sb-card-tp">
+                  <h4 class="sb-card-title">Chevrefrit au miel</h4>
+                  <div class="sb-price"><sub>$</sub> 14</div>
+                </div>
+                <div class="sb-description">
+                  <p class="sb-text sb-mb-15"><span>tomatoes</span>, <span>nori</span>, <span>feta cheese</span>, <span>mushrooms</span>, <span>rice noodles</span>, <span>corn</span>, <span>shrimp</span>.</p>
+                  <ul class="sb-stars">
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><span>(4 ratings)</span></li>
+                  </ul>
+                </div>
+              </a>
+            </div>
+            <div class="sb-grid-item sb-item-33 main-dishes">
+              <a data-fancybox="menu" data-no-swup="" href="/images/picture/22.jpg" class="sb-menu-item sb-mb-30">
+                <div class="sb-cover-frame">
+                  <img src="/images/picture/22.jpg" alt="product">
+                  <div class="sb-badge sb-vegan"><i class="fas fa-leaf"></i> Vegan</div>
+                </div>
+                <div class="sb-card-tp">
+                  <h4 class="sb-card-title">Saumon Gravlax</h4>
+                  <div class="sb-price"><sub>$</sub> 9</div>
+                </div>
+                <div class="sb-description">
+                  <p class="sb-text sb-mb-15"><span>tomatoes</span>, <span>nori</span>, <span>feta cheese</span>, <span>mushrooms</span>, <span>rice noodles</span>, <span>corn</span>, <span>shrimp</span>.</p>
+                  <ul class="sb-stars sb-unrated">
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><span>Unrated</span></li>
+                  </ul>
+                </div>
+              </a>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+      <!-- menu end -->
+
+{{#extend "js"}}
+    <script src="/js/filter.js"></script>
+    <script src="/js/menu-filter.js"></script>
+{{/extend}}

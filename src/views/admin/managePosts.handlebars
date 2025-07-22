@@ -1,0 +1,607 @@
+{{#extend "css"}}
+<style>
+  input::placeholder,textarea::placeholder {
+  color: #a9a1a1!important; /* 设置placeholder文字颜色为红色 */
+  opacity: 1; /* 修复Firefox的透明度 */
+  }
+  
+  ::-ms-input-placeholder,textarea::placeholder { /* 适用于Edge浏览器 */
+  color: #a9a1a1;
+  }  
+  .form__group{
+    margin-bottom:2.5rem;
+  }
+  .form__label{
+    font-size:1rem;
+    font-weight:bold;
+  }
+  .form__group p.tip{
+    font-size:0.5rem;
+    color: #666;
+    margin-top:0.5rem;
+  }
+#tag-container .tag {
+display: inline-block;
+background-color: #e1e1e1;
+padding: 2px 10px;
+margin-right: 5px;
+border-radius: 3px;
+position: relative;
+margin-top:1rem;
+}
+#tag-container .delete-tag {
+margin-left: 10px;
+color: #999;
+cursor: pointer;
+}
+#form-tags {
+border: none;
+outline: none;
+padding: 5px;
+margin-top: 5px;
+}
+
+.delete-tag:focus {
+outline: none;
+}
+
+  /* Stats Styles */
+  .stats-container {
+    margin: 2rem 0;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stats-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .stats-card h5 {
+    margin: 0 0 1rem 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .stats-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .com-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  .com-stat {
+    text-align: center;
+  }
+  
+  .com-number {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .com-label {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .referrer-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .referrer-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .referrer-url {
+    color: #666;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+  }
+  
+  .referrer-count {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    background-color: transparent;
+  }
+
+  .ranking-table th,
+  .ranking-table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+    text-align: left;
+  }
+
+  .ranking-table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+    font-weight: 600;
+  }
+
+  .ranking-table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  .ranking-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+
+  .stats-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+
+  .stats-card h5 {
+    margin: 0 0 1rem 0;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+</style>
+{{/extend}}
+<!-- begin content -->
+<main class="content" aria-label="Content">
+      <!-- begin page -->
+<div class="container">
+  <article class="page">
+    <div class="page__head">
+      <div class="page__info">
+        <h1 class="page__title" style="font-size:2rem;">Site Analytics Dashboard</h1>
+        <p>Track and analyze your site's performance and visitor engagement</p>
+      </div>
+      <div class="page-image"  style="height:200px ;width:100%;">
+        <img class="lazy" data-src="/images/article-create.jpg" alt="Submit your AI gadget" loading="lazy">
+      </div>
+    </div>
+    <div class="page__content">
+      <div class="form-box">
+        {{!-- <div class="contact-head"> 
+          <p class="contact-description"></p>
+        </div> --}}
+        {{!-- {{#if isAdmin}} --}}
+
+<h4>Page Statistics</h4>
+<div class="stats-container">
+  <div class="stats-grid">
+    <!-- Total Visits Card -->
+    <div class="stats-card">
+      <h5>Total Page Visits</h5>
+      <div class="stats-number">{{pageStats.totalVisits}}</div>
+      <div class="com-stats">
+        <div class="com-stat">
+          <div class="com-number">{{pageStats.deviceStats.desktop}}</div>
+          <div class="com-label">Desktop</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{pageStats.deviceStats.mobile}}</div>
+          <div class="com-label">Mobile</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{pageStats.deviceStats.tablet}}</div>
+          <div class="com-label">Tablet</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Active Sessions Card -->
+    <div class="stats-card">
+      <h5>Active Sessions</h5>
+      <div class="stats-number">{{pageStats.activeSessions.length}}</div>
+      <p style="color: #666; font-size: 0.9rem;">Last 30 minutes</p>
+    </div>
+    
+    <!-- Top Referrers Card -->
+    <div class="stats-card">
+      <h5>Top Referrers</h5>
+      <ul class="referrer-list">
+        {{#each pageStats.topReferrers}}
+        <li class="referrer-item">
+          <span class="referrer-url" title="{{this.url}}">{{this.url}}</span>
+          <span class="referrer-count">{{this.count}}</span>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Daily Stats Table -->
+  <div class="stats-card">
+    <h5>Daily Visitor Trends</h5>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Visits</th>
+          <th>Unique Visitors</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each pageStats.dailyStats}}
+        <tr>
+          <td>{{ this.date}}</td>
+          <td>{{this.visits}}</td>
+          <td>{{this.uniqueVisitors}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    <!-- Total Visits Card -->
+    <div class="stats-card">
+      <h5>Total Page Visits</h5>
+      <div class="stats-number">{{pageStats.totalVisits}}</div>
+      <div class="com-stats">
+        <div class="com-stat">
+          <div class="com-number">{{pageStats.deviceStats.desktop}}</div>
+          <div class="com-label">Desktop</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{pageStats.deviceStats.mobile}}</div>
+          <div class="com-label">Mobile</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{pageStats.deviceStats.tablet}}</div>
+          <div class="com-label">Tablet</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Subscriber Stats Card -->
+    <div class="stats-card">
+      <h5>Active Subscribers</h5>
+      <div class="stats-number">{{subscriberStats.total}}</div>
+      <div class="com-stats">
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.daily}}</div>
+          <div class="com-label">New Today</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.weekly}}</div>
+          <div class="com-label">This Week</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.monthly}}</div>
+          <div class="com-label">This Month</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.dailyVerified}}</div>
+          <div class="com-label">New Verified Today</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.weeklyVerified}}</div>
+          <div class="com-label">New Verified This Week</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.monthlyVerified}}</div>
+          <div class="com-label">New Verified This Month</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subscriber Stats Card -->
+    <div class="stats-card">
+      <h5>Bookmark Stats</h5>
+      <div class="stats-number">{{bookmarkStats.total}}</div>
+      <div class="com-stats">
+        <div class="com-stat">
+          <div class="com-number">{{bookmarkStats.daily}}</div>
+          <div class="com-label">New Today</div>
+        </div>
+       <div class="com-stat">
+          <div class="com-number">{{bookmarkStats.weekly}}</div>
+          <div class="com-label">This Week</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{bookmarkStats.monthly}}</div>
+          <div class="com-label">This Month</div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="stats-card">
+      <h5>Old Subscribers Verified data</h5>
+      <div class="com-stats">
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.dailyHistoricalVerified}}</div>
+          <div class="com-label">Daily Historical Verified Today</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.weeklyHistoricalVerified}}</div>
+          <div class="com-label">Weekly Historical Verified</div>
+        </div>
+        <div class="com-stat">
+          <div class="com-number">{{subscriberStats.monthlyHistoricalVerified}}</div>
+          <div class="com-label">Monthly Historical Verified</div>
+        </div>
+      </div>      
+    </div>
+
+
+<h4>Page Visit Rankings (Top 100)</h4>
+<div class="stats-container">
+  <!-- Daily Rankings -->
+  <div class="stats-card">
+    <h5>Daily Rankings</h5>
+    <div class="table-responsive">
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Page</th>
+            <th>Today's Visits</th>
+            <th>Change</th>
+            <th>Last Visit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each pageStats.dailyRankings}}
+          <tr>
+            <td>{{math @index '+' 1}}</td>
+            <td>{{this.path}}</td>
+            <td>{{this.visits}}</td>
+            <td>{{this.change}}</td>
+            <td>{{formatDate this.lastVisit}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Weekly Rankings -->
+  <div class="stats-card">
+    <h5>Weekly Rankings</h5>
+    <div class="table-responsive">
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Page</th>
+            <th>Weekly Visits</th>
+            <th>Change</th>
+            <th>Trend</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each pageStats.weeklyRankings}}
+          <tr>
+            <td>{{math @index '+' 1}}</td>
+            <td>{{this.path}}</td>
+            <td>{{this.visits}}</td>
+            <td>{{this.change}}</td>
+            <td>{{this.trend}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Monthly Rankings -->
+  <div class="stats-card">
+    <h5>Monthly Rankings</h5>
+    <div class="table-responsive">
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Page</th>
+            <th>Monthly Visits</th>
+            <th>Change</th>
+            <th>Avg Daily</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each pageStats.monthlyRankings}}
+          <tr> 
+            <td>{{math @index '+' 1}}</td>
+            <td>{{this.path}}</td>
+            <td>{{this.visits}}</td>
+            <td>{{this.change}}</td>
+            <td>{{this.avgDaily}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Yearly Rankings -->
+  <div class="stats-card">
+    <h5>Yearly Rankings</h5>
+    <div class="table-responsive">
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Page</th>
+            <th>Yearly Visits</th>
+            <th>Change</th>
+            <th>Avg Monthly</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each pageStats.yearlyRankings}}
+          <tr> 
+            <td>{{math @index '+' 1}}</td>
+            <td>{{this.path}}</td>
+            <td>{{this.visits}}</td>
+            <td>{{this.change}}</td>
+            <td>{{this.avgMonthly}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<h4>Top Sites</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Upvotes</th>
+      <th>Visits</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>   
+    {{#if sites.length}}
+    {{#each sites}}
+    <tr>
+      <td>{{this.name}}</td>
+      <td>{{this.upvoteCount}}</td>
+      <td>{{this.pv}}</td>
+      <td>{{this.created_at}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+  </tbody>
+</table>
+
+<h4>Top News All Sorted</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Visits</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>   
+    {{#if topNewsAllSorted.length }}
+    {{#each topNewsAllSorted}}
+    <tr>
+      <td>{{this.title}}</td>
+      <td>{{this.pv}}</td>
+      <td>{{this.created_at}}</td>
+    </tr>
+    {{/each}}
+    {{/if}}
+  </tbody>
+</table>
+
+        <form class="form" action="/admin/managePostsSent" method="POST" enctype="multipart/form-data">
+          <div class="form__group">
+            <label class="form__label" for="form-newsletter">AI Highlights News IDs</label>
+                <select name="newsID" class="form__input" id="form-newsletter">
+                    {{#if topNewsAll}}
+                    {{#each topNewsAll}}
+                    <option value="{{this._id}}">#Issue {{this.issueNum}}</option>
+                    {{/each}}
+                    {{else}}
+                    <option value="" selected>No data</option>
+                    {{/if}}
+                </select>
+          </div>
+
+        <div class="form__group">
+          <button class="button button--big" type="submit" id="submit">Send</button>
+        </div>
+        </form>        
+      </div>
+    </div>
+  </article>
+
+</div>
+<!-- end page -->
+</main>
+<!-- end content -->
+
+{{#extend "js"}}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js" integrity="sha512-eV68QXP3t5Jbsf18jfqT8xclEJSGvSK5uClUuqayUbF5IRK8e2/VSXIFHzEoBnNcvLBkHngnnd3CY7AFpUhF7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    (function(){
+    var domain = document.domain +':'+ window.location.port;
+    domain = window.location.protocol + "//" + domain;
+    let returnFile = function(res){
+      return domain + "/upload/sites/" + res.data.filename;
+    } 
+    tinymce.init({
+      selector: '#editor',
+      plugins: 'image  link',
+      toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code link |  image',
+      relative_urls: false,
+      remove_script_host: false,      
+      images_upload_handler: (blobInfo, success, failure) => {
+        const formData = new FormData();
+        formData.append('image', blobInfo.blob(), blobInfo.filename());
+
+        axios.post('/admin/upload2site', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+          .then(response => success(returnFile(response)))
+          .catch(error => failure('Image upload failed: ' + error));
+      },
+      file_picker_callback: (callback, value, meta) => {
+        if (meta.filetype === 'image') {
+          const input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          input.setAttribute('accept', 'image/*');
+          input.onchange = () => {
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+            axios.post('/admin/upload2site', formData, {
+              headers: { 'Content-Type': 'multipart/form-data' }
+            })
+              .then(response => {
+                callback(returnFile(response));
+              })
+              .catch(error => console.error(error));
+          };
+          input.click();
+        }
+      }
+    });
+    }())
+  </script>
+  <!-- Add Chart.js for visualizations -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // We can add charts initialization here if needed
+</script>
+{{/extend}}

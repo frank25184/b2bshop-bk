@@ -1,0 +1,23 @@
+              <a data-fancybox="menu"  data-no-swup="" href="/product/{{this.pathName}}" class="sb-menu-item sb-mb-30">
+                <div class="sb-cover-frame">
+                  <img src="/upload/products/thumbnail/{{this.imgs.[0]}}" alt="{{this.name}}">
+                  {{#if this.subcategories.length}}
+                    <div class="sb-badge sb-vegan"><i class="fas fa-medkit aria-hidden="true"></i> {{this.subcategories.[0].name}}</div>
+                  {{/if}}
+                </div>
+                <div class="sb-card-tp" style="background-color: transparent;padding-left:0">
+                  <h4 class="sb-card-title" style="font-size:1.3rem;margin-top:1rem;width: 100%;">{{this.name}}</h4>
+                  {{!-- <div class="sb-price"><sub>$</sub> {{this.priceRange.min}}</div> --}}
+                </div>
+                <div class="sb-description">
+                <p class="sb-text sb-mb-15">{{{this.intro}}}</p>
+                    <ul class="sb-stars">
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><span>(5 ratings)</span></li>
+                    </ul> 
+                </div>
+              </a>

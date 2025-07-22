@@ -1,0 +1,90 @@
+  
+{{#extend "css"}}
+<link rel="canonical" href="https://coglist.com">
+<style>
+  #membedded-subscribe{
+    display:block;
+  }
+  #mce-EMAIL{
+    text-align: center;
+  }
+    .section__inner{
+    border:0;
+    
+  }
+</style>
+{{/extend}}
+
+  
+    <!-- begin content -->
+    <main class="content" aria-label="Content" id="content">
+      
+<!-- begin hero -->
+<section class="hero">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+        <div class="hero__inner">
+          
+          <h1 class="hero__title">AI Learning 101: AI Introduction, Courses, Tutorials & Reviews</h1>
+          <p class="hero__description">Learn AI the easy way! Join the world's best <strong>AI newsletter</strong> with readers from Google, Tesla, Amazon, Meta, Microsoft and more.</p>
+          <br>
+
+          <div class="widget-subscribe">
+            <form class="subscribe-form validate" style="margin:2% 20%;"
+              action="/admin/subscribe" method="POST" id="membedded-subscribe-form2" name="membedded-subscribe-form" target="_blank" novalidate>
+              <label class="screen-reader-text" for="mce-EMAIL2">Never miss latest AI Projects, Tutorials & Tips</label>
+              <input class="subscribe-email required email" id="mce-EMAIL2" type="email" name="email" placeholder="Your email address" >
+              <button class="button button--big" id="membedded-subscribe2" type="submit" name="subscribe">Subscribe</button>
+            </form>
+            <p class="result"></p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end hero -->
+
+
+
+
+<!-- begin section-tag -->
+{{#if data.newCategories}}
+{{#each data.newCategories}}
+<section class="section section-tags animate">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+        <div class="section__inner">
+
+          <div class="section__info">
+            <div class="section__head">
+              <h2 class="section__title"><a href="/hub/{{this.name_changed}}" class="section__link">{{capitalizeFirstLetterAll this.name}}</a></h2>
+              
+              <a href="/hub/{{this.name_changed}}" class="button">View all <i class="ion ion-ios-arrow-forward"></i></a>
+              
+            </div>
+          </div>
+
+          <div class="row">
+            {{#each this.posts}}
+            <div class="col col-4 col-d-6 col-t-12">
+              {{> v2/general/article}}
+            </div>
+            {{/each}}
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{/each}}
+{{/if}}
+<!-- end section-tag -->
+
+    </main>
+    <!-- end content -->

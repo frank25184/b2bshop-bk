@@ -1,0 +1,348 @@
+
+<!-- banner -->
+      {{!-- <section class="sb-banner sb-banner-xs sb-banner-color">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- main title -->
+              <div class="sb-main-title-frame">
+                <div class="sb-main-title">
+                  <h1 class="sb-h2">Online shop</h1>
+                  <ul class="sb-breadcrumbs">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop-1.html">Shop</a></li>
+                    <li><a href="#.">Product</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- main title end -->
+            </div>
+          </div>
+        </div>
+      </section> --}}
+      <!-- banner end -->
+      <!-- product -->
+      <section class="sb-p-90-0">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="sb-gallery-item sb-gallery-square sb-mb-90">
+                <img src="/upload/products/thumbnail/{{product.imgs.[0]}}" alt="photo">
+                {{#if subcategories.length}}
+                   {{#each subcategories}}
+                     <div class="sb-badge sb-vegan"><i class="fas fa-leaf"></i> {{this.name}}</div>
+                   {{/each}}
+                {{/if}}
+                <!-- button -->
+                {{!-- <a data-fancybox="menu" data-no-swup="" href="/images/picture/41.jpg" class="sb-btn sb-btn-2 sb-btn-icon sb-btn-gray sb-zoom">
+                  <span class="sb-icon">
+                    <img src="/images/picture/zoom.svg" alt="icon">
+                  </span>
+                </a> --}}
+                <!-- button end -->
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="sb-product-description sb-mb-90">
+                <div class="sb-price-frame sb-mb-30">
+                  <h3>{{product.name}}</h3>
+                  {{#if product.priceRange.hasVariants}}
+                    <div class="sb-price"><sub>$</sub> {{product.priceRange.min}} - {{product.priceRange.max}}</div>
+                  {{else}}
+                    <div class="sb-price"><sub>$</sub> {{product.startingPrice}}</div>
+                  {{/if}}
+                </div>
+                <!-- 产品简介 -->
+                <p class="sb-text sb-mb-30">{{product.intro}}</p>
+
+                <ul class="sb-stars sb-mb-25">
+                  <li><i class="fas fa-star"></i></li>
+                  <li><i class="fas fa-star"></i></li>
+                  <li><i class="fas fa-star"></i></li>
+                  <li><i class="fas fa-star"></i></li>
+                  <li><i class="fas fa-star"></i></li>
+                  <li><span>(4 ratings)</span></li>
+                </ul>
+                <p class="sb-text sb-mb-30">{{product.intro}}</p>
+
+                <div class="sb-buttons-frame">
+                  <div class="sb-input-number-frame">
+                    <div class="sb-input-number-btn sb-sub"  onclick="updateQuantity('decrease')">-</div>
+                    <input type="number" id="productQuantity" value="1" min="1" max="10" onchange="validateQuantity(this)">
+                    <div class="sb-input-number-btn sb-add" onclick="updateQuantity('increase')">+</div>
+                  </div>
+                  <!-- button -->
+                  <a href="javascript:void(0)"  class="sb-btn sb-atc" onclick="addToCart('{{product.name}}', '{{product.startingPrice}}', '/upload/products/thumbnail/{{product.imgs.[0]}}')">
+                    <span class="sb-icon">
+                      <img src="/images/picture/cart.svg" alt="icon">
+                    </span>
+                    <span class="sb-add-to-cart-text">Add to cart</span>
+                    <span class="sb-added-text">Added</span>
+                  </a>
+                  <!-- button end -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- filter -->
+          <div class="sb-filter">
+            <a href="javascript:void(0)" data-filter=".sb-details-tab" class="sb-filter-link sb-active">Product details</a>
+            <a href="javascript:void(0)" data-filter=".sb-ingredients-tab" class="sb-filter-link">Ingredients</a>
+            <a href="javascript:void(0)" data-filter=".sb-reviews-tab" class="sb-filter-link">Reviews</a>
+          </div>
+          <!-- filter end -->
+          <div class="sb-masonry-grid sb-tabs">
+            <div class="sb-grid-sizer"></div>
+            <div class="sb-grid-item sb-details-tab" style="display: block;">
+              <div class="sb-tab">
+                <div class="sb-text">{{product.content}}</div>
+              </div>
+            </div>            
+            <div class="sb-grid-item sb-ingredients-tab" style="display: none;">
+              <div class="sb-tab">
+                <ul class="sb-list">
+                  {{#if product.brand}}
+                  <li><b>Brand</b><span>{{product.brand}}</span></li>
+                  {{/if}}
+                  {{#if product.modelNumber}}
+                  <li><b>Model</b><span>{{product.modelNumber}}</span></li>
+                  {{/if}}
+                  {{#if product.standardNumber}}
+                  <li><b>Standard Number</b><span>{{product.standardNumber}}</span></li>
+                  {{/if}}
+                  {{#if product.registrationNumber}}
+                  <li><b>Registration Number</b><span>{{product.registrationNumber}}</span></li>
+                  {{/if}}
+                  {{#if product.manufacturer}}
+                  <li><b>Manufacturer</b><span>{{product.manufacturer}}</span></li>
+                  {{/if}}
+                  {{#if product.manufacturingLocation}}
+                  <li><b>Location</b><span>{{product.manufacturingLocation}}</span></li>
+                  {{/if}}
+                  {{#if product.qualityCertifications}}
+                  <li><b>Quality Certifications</b><span>{{product.qualityCertifications}}</span></li>
+                  {{/if}}
+                  {{#if product.safetyStandards}}
+                  <li><b>Safety Standards</b><span>{{product.safetyStandards}}</span></li>
+                  {{/if}}
+                  {{!-- {{#if product.technicalSupport}}
+                  <li><b>Technical Support</b><span>{{product.technicalSupport}}</span></li>
+                  {{/if}} --}}
+
+                </ul>
+                <ul  class="sb-list">
+                 {{#if product.warranty}}
+                  <li><b>Warranty</b><span>{{product.warranty}}</span></li>
+                  {{/if}}
+                  {{#if product.technicalSupport}}
+                  <li><b>Technical Support</b><span>{{product.technicalSupport}}</span></li>
+                  {{/if}}                  
+                </ul>
+              </div>
+            </div>
+            <div class="sb-grid-item sb-reviews-tab" style="display: none;">
+              <div class="sb-tab">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="sb-review-card sb-mb-60">
+                      <div class="sb-review-header sb-mb-15">
+                        <h4 class="sb-mb-10">Very tasty</h4>
+                        <ul class="sb-stars">
+                          <li><i class="fas fa-star"></i></li>
+                          <li><i class="fas fa-star"></i></li>
+                          <li><i class="fas fa-star"></i></li>
+                          <li><i class="fas fa-star"></i></li>
+                          <li><i class="fas fa-star"></i></li>
+                        </ul>
+                      </div>
+                      <p class="sb-text sb-mb-15">Inventore possimus laudantium provident, rem eligendi velit. Aut molestias, ipsa itaque laborum, natus
+                        tempora, ut soluta animi ducimus dignissimos deserunt doloribus in reprehenderit rem accusamus! Quibusdam labore, aliquam dolor harum!</p>
+                      <div class="sb-author-frame">
+                        <div class="sb-avatar-frame">
+                          <img src="/images/picture/17.jpg" alt="Guest">
+                        </div>
+                        <h4>Emma Newman</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="sb-review-card sb-mb-60">
+                      <div class="sb-review-header sb-mb-15">
+                        <h4 class="sb-mb-10">I have lunch here every day</h4>
+                        <ul class="sb-stars">
+                          <li><i class="fas fa-star"></i></li>
+                          <li><i class="fas fa-star"></i></li>
+                          <li><i class="fas fa-star"></i></li>
+                          <li><i class="fas fa-star"></i></li>
+                          <li><i class="fas fa-star"></i></li>
+                        </ul>
+                      </div>
+                      <p class="sb-text sb-mb-15">Tempora ut soluta animi ducimus dignissimos deserunt doloribus in reprehenderit Reprehenderit rem accusamus! Quibusdam labore, aliquam dolor harum!</p>
+                      <div class="sb-author-frame">
+                        <div class="sb-avatar-frame">
+                          <img src="/images/picture/24.jpg" alt="Guest">
+                        </div>
+                        <h4>Paul Trueman</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- product end -->
+
+      <!-- short menu -->
+      <section class="sb-short-menu sb-p-0-90">
+        <div class="sb-bg-2">
+          <div></div>
+        </div>
+        <div class="container">
+          <div class="sb-group-title sb-mb-30">
+            <div class="sb-left sb-mb-30">
+              <h2 class="sb-cate-title sb-mb-30">Products you may like</h2>
+              <p class="sb-text">Similar to this product.</p>
+            </div>
+            {{!-- <div class="sb-right sb-mb-30">
+              <!-- slider navigation -->
+              <div class="sb-slider-nav">
+                <div class="sb-prev-btn sb-short-menu-prev"><i class="fas fa-arrow-left"></i></div>
+                <div class="sb-next-btn sb-short-menu-next"><i class="fas fa-arrow-right"></i></div>
+              </div>
+              <!-- slider navigation end -->
+            </div> --}}
+          </div>
+          <div class="swiper-container sb-short-menu-slider-4i">
+            <div class="swiper-wrapper">
+              {{#if alternativesThree.length}}
+                {{#each alternativesThree}}
+                <div class="swiper-slide">
+                  <div class="sb-menu-item">
+                    <a href="/product/{{this.name_changed}}" class="sb-cover-frame">
+                      {{!-- <img src="/upload/products/thumbnail/{{this.imgs.[0]}}" alt="{{this.name}}"> --}}
+                      <img src="/upload/products/thumbnail/{{this.imgs.[0]}}" alt="{{this.name}}">
+                    </a>
+                    <div class="sb-card-tp">
+                      <h4 class="sb-card-title"><a href="/product/{{this.name_changed}}">{{this.name}}</a></h4>
+                      <div class="sb-price"><sub>$</sub> {{this.startingPrice}}</div>
+                    </div>
+                    <div class="sb-description">
+                      <p class="sb-text sb-mb-15">{{this.intro}}</p>
+                    </div>
+                    <div class="sb-card-buttons-frame">
+                      <!-- button -->
+                      <a href="/product/{{this.name_changed}}" class="sb-btn sb-btn-2 sb-btn-gray sb-btn-icon sb-m-0">
+                        <span class="sb-icon">
+                          <img src="/images/picture/arrow.svg" alt="icon">
+                        </span>
+                      </a>
+                      <!-- button end -->
+                      <!-- button -->
+                      <a class="sb-btn sb-atc"  onclick="addToCart('{{this.name}}', '{{this.startingPrice}}', '/upload/products/thumbnail/{{this.imgs.[0]}}')">
+                        <span class="sb-icon">
+                          <img src="/images/picture/cart.svg" alt="icon">
+                        </span>
+                        <span class="sb-add-to-cart-text">Add to cart</span>
+                        <span class="sb-added-text">Added</span>
+                      </a>
+                      <!-- button end -->
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- short menu end -->
+
+      {{#extend "js"}}
+      <script>
+document.addEventListener('DOMContentLoaded', function() {
+          // Hide all tabs except the default one on page load
+          var gridItems = document.querySelectorAll('.sb-grid-item');
+          gridItems.forEach(function(item) {
+            if (!item.classList.contains('sb-details-tab')) {
+              item.style.display = 'none';
+            }
+          });
+
+          var filterLinks = document.querySelectorAll('.sb-filter-link');
+          filterLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+              e.preventDefault();
+              var filter = this.getAttribute('data-filter');
+              
+              // Remove active class from all links
+              filterLinks.forEach(function(l) {
+                l.classList.remove('sb-active');
+              });
+              
+              // Add active class to clicked link
+              this.classList.add('sb-active');
+              
+              // Hide all tabs
+              gridItems.forEach(function(item) {
+                item.style.display = 'none';
+              });
+              
+              // Show the selected tab
+              document.querySelector(filter).style.display = 'block';
+            });
+          });
+
+
+
+        });
+
+
+          // ********添加购物车相关函数************
+          function updateQuantity(action) {
+            const input = document.getElementById('productQuantity');
+            let value = parseInt(input.value);
+            
+            if(action === 'increase' && value < 10) {
+              input.value = value + 1;
+            } else if(action === 'decrease' && value > 1) {
+              input.value = value - 1;
+            }
+          }
+          function validateQuantity(input) {
+            let value = parseInt(input.value);
+            if(value < 1) input.value = 1;
+            if(value > 10) input.value = 10;
+          }
+          function addToCart(name, price, image) {
+            const quantity = parseInt(document.getElementById('productQuantity').value);
+            const cartItem = {
+              name: name,
+              price: price,
+              image: image,
+              quantity: quantity
+            };
+            // 获取现有购物车数据
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            // 检查商品是否已在购物车中
+            const existingItemIndex = cart.findIndex(item => item.name === name);
+            if(existingItemIndex > -1) {
+              cart[existingItemIndex].quantity += quantity;
+            } else {
+              cart.push(cartItem);
+            }
+            // 保存到localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            // 更新购物车显示
+            updateMiniCart();
+            // 显示Added效果
+            const addButton = document.querySelector('.sb-atc');
+            addButton.classList.add('sb-added');
+            setTimeout(() => {
+              addButton.classList.remove('sb-added');
+            }, 1000);
+          }
+
+      </script>
+      {{/extend}}

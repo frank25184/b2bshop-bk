@@ -1,0 +1,12 @@
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+
+echo "install Git.."
+sudo apt-get update -y
+sudo apt install git -y
+
+
+
+
+mkdir -p /sites & cd /sites
+git clone https://github.com/frank25184/b2bshop.git

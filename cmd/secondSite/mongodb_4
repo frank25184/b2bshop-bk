@@ -1,0 +1,87 @@
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+
+echo "adding  authority... "
+
+# echo "Step1: Start MongoDB without access control"  #shopOwner:R5, frank:F5
+echo "open another cmd with:
+ use admin
+ db.createUser(
+   {
+     user: "shopOwner",
+     pwd: passwordPrompt(),
+     roles: [
+       { role: "userAdminAnyDatabase", db: "admin" },
+       { role: "readWriteAnyDatabase", db: "admin" }
+     ]
+   }
+ )"
+mongo --port 27017 
+
+
+echo "open another window and Shut down the mongod instance      using the command[ db.adminCommand( { shutdown: 1 } ) ] or   just using ctr+c in step 1"
+
+
+echo "Start the mongod with access control enabled. and add --fork to make it run behind; bind_ip_all for out linking using Compass tool"
+# mongod --auth --port 27017 --bind_ip_all  --dbpath /var/lib/mongodb  --logpath /var/log/mongod-fork.log --fork
+
+
+
+
+
+
+
+
+
+
+
+echo "start from herer"
+
+echo "Start mongosh with the  -u <username>, -p, and the --authenticationDatabase <database> command line options:"
+mongo --port 27017 --authenticationDatabase "admin" -u "shopOwner" -p
+echo "then create user : "
+
+
+
+
+echo " 
+use.admin 
+      #very important so that it could be admin.frank
+db.createUser({user: 'roger', pwd: 'Roger548331198', roles: [{role: 'dbAdmin', db: 'toolhz'}, {role: 'dbOwner', db: 'toolhz'}]});"
+
+
+
+
+
+# echo 'add --fork to make it run behind'
+# mongod --auth --port 27018 --dbpath /var/lib/mongodb --logpath /var/log/mongod-fork.log
+
+
+
+
+#echo "add : security:      authorization: enabled to the mongod.conf"
+#vi /etc/mongod.conf
+
+
+
+
+# echo "command:
+#  use admin
+#  db.createUser({user: 'admin', pwd: 'Roger_548331198', roles: [{role: 'userAdminAnyDatabase', db: 'admin'}]});
+#  quit using control D
+
+#  mongo mongodb://localhost:27017
+#  db.auth('admin', 'Roger_548331198')
+#  db.createUser({user: 'frank', pwd: 'Frank548331198', roles: [{role: 'dbAdmin', db: 'dapphz'}, {role: 'dbOwner', db: 'dapphz'}]});
+
+#   quit using control D
+# "
+
+
+
+
+
+##https://www.mongodb.com/docs/v4.4/tutorial/install-mongodb-on-debian/
+# https://www.mongodb.com/docs/manual/tutorial/create-users/
+# https://www.mongodb.com/docs/manual/tutorial/configure-scram-client-authentication/
+# https://www.mongodb.com/docs/manual/tutorial/manage-mongodb-processes/

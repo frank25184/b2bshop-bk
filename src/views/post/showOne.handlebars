@@ -1,0 +1,153 @@
+{{#extend "css"}}
+<link rel="canonical" href="">
+<style>
+   img{max-width:100%;}
+</style>
+{{/extend}}
+     <!-- banner -->
+      <section class="sb-banner sb-banner-xs sb-banner-color supportTop">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- main title -->
+              <div class="sb-main-title-frame">
+                <div class="sb-main-title">
+                  <h1 class="sb-h2">{{article.title}}</h1>
+                  <ul class="sb-breadcrumbs">
+                    <li><a href="/articles">Blogs</a></li>
+                    <li><a href="javascript:(0)">{{productCategory.name}}</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- main title end -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- banner end -->
+
+      <!-- publication -->
+      <section class="sb-publication sb-p-90-90">
+        <div class="container" data-sticky-container="">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="sb-author-panel">
+                <div class="sb-author-frame">
+                  <div class="sb-avatar-frame">
+                    <img src="/images/picture/17.jpg" alt="Guest">
+                  </div>
+                  <h4>{{postUser.username}}</h4>
+                </div>
+                <div class="sb-suptitle"><span>{{article.updated_at}}</span></div>
+              </div>
+              <div class="sb-post-cover sb-mb-30"><img src="/upload/articles/thumbnail/{{article.topIMG}}" alt="{{article.title}}"></div>
+              {{{article.content}}}
+            </div>
+            <div class="col-lg-4">
+              <div class="sb-sidebar-frame sb-pad-type-2 sb-sticky" data-margin-top="120">
+                <div class="sb-sidebar">
+                  {{#if products.length}} 
+                    <div class="sb-ib-title-frame sb-mb-30">
+                      <h4>Related Products</h4><i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="sb-related-products sb-mb-30">
+                      {{#each products}}
+                        <div class="sb-product-card">
+                          <div class="row g-2 align-items-center">
+                            <div class="col-auto">
+                              <a href="/product/{{this.pathName}}" class="sb-cover-frame d-block">
+                                <img src="/upload/products/thumbnail/{{this.imgs.[0]}}" alt="{{this.name}}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;">
+                              </a>
+                            </div>
+                            
+                            <div class="col" style="margin-top: 2rem">
+                              <div class="sb-card-tp">
+                                <h6 class="sb-card-title mb-0">
+                                  <a href="/product/{{this.name_changed}}" class="text-decoration-none">{{this.name}}</a>
+                                </h6>
+                                <div class="sb-description">{{truncate this.intro 50}}</div>
+                                {{!-- <div class="sb-price text-muted small"><small>$</small>{{this.price}}</div> --}}
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      {{/each}}
+                    </div>
+                  {{/if}}
+                  {{!-- <div class="sb-ib-title-frame sb-mb-30">
+                    <h4>Search</h4><i class="fas fa-arrow-down"></i>
+                  </div>
+                  <form>
+                    <div class="sb-group-input sb-group-with-btn">
+                      <input type="text" required="">
+                      <span class="sb-bar"></span>
+                      <label>What you search?</label>
+                      <button type="submit"><img src="/images/picture/search.svg" alt="search"></button>
+                    </div>
+                  </form> --}}
+                  {{!-- <div class="sb-ib-title-frame sb-mb-30">
+                    <h4>Categories</h4><i class="fas fa-arrow-down"></i>
+                  </div>
+                  <ul class="sb-list sb-mb-30">
+                    <li><b><a href="#.">Recipes</a></b><span class="sb-number">12</span></li>
+                    <li><b><a href="#.">News of the restaurant</a></b><span class="sb-number">17</span></li>
+                    <li><b><a href="#.">Gastronomy</a></b><span class="sb-number">33</span></li>
+                    <li><b><a href="#.">Service sector</a></b><span class="sb-number">44</span></li>
+                  </ul>
+                  <div class="sb-ib-title-frame sb-mb-30">
+                    <h4>Keywords</h4><i class="fas fa-arrow-down"></i>
+                  </div>
+                  <ul class="sb-keywords">
+                    <li><a href="#.">Food</a></li>
+                    <li><a href="#.">Gastronomy</a></li>
+                    <li><a href="#.">Restaurant</a></li>
+                    <li><a href="#.">Eat</a></li>
+                    <li><a href="#.">Rest</a></li>
+                    <li><a href="#.">Montreal</a></li>
+                    <li><a href="#.">Caffe</a></li>
+                    <li><a href="#.">Fast food</a></li>
+                    <li><a href="#.">Recipes</a></li>
+                  </ul> --}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- publication end -->
+
+      <!-- popular --> 
+      <section class="sb-popular sb-p-60-30">
+        <div class="sb-bg-3" style="background-color: transparent;">
+        </div>
+        <div class="container">
+          <div class="sb-group-title sb-mb-30">
+            <div class="sb-left sb-mb-30">
+              <h2 class="sb-mb-30">Most <span>popular</span> Articles</h2>
+              {{!-- <p class="sb-text"></p> --}}
+            </div>
+          </div>
+          <div class="swiper-container sb-blog-slider-3i">
+            <div class="swiper-wrapper"> 
+              
+              {{#each alternativesFour}}
+              <div class="swiper-slide"> 
+                <a href="/article/{{pathName}}" class="sb-blog-card sb-mb-30">
+                  <div class="sb-cover-frame sb-mb-30">
+                    <img src="/upload/articles/{{topIMG}}" alt="cover">
+                    <div class="sb-badge">Popular</div>
+                  </div>
+                  <div class="sb-blog-card-descr">
+                    <h3 class="sb-mb-10">{{title}}</h3>
+                    <div class="sb-suptitle sb-mb-15"><span>{{updated_at}}</span> <span>{{postUser.username}}</span></div>
+                    <p class="sb-text">{{intro}}</p>
+                  </div>
+                </a>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- popular end -->

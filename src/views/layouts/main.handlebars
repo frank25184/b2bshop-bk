@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <title>{{seo.title}}</title>
+  <meta name="description" content="{{seo.description}}"/>
+  <meta name="keywords" content="{{seo.keywords}}"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-title" content="{{seo.title}}">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <!-- set colors for Apple -->
+  <meta name="format-detection" content="telephone=no, email=yes"/>
+  <!-- optimize for handheld, esp Blackmerry for its browser not recognizing viewport-->
+  <meta name="HandheldFriendly" content="true">
+  <!-- old browser support for Mircrosoft -->
+  <!-- windows phone for no high light when clicking -->
+  <meta name="msapplication-tap-highlight" content="no">
+  {{!-- <link rel="alternate" type="application/rss+xml" title="" href="../feed.xml"> --}}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{seo.title}}">
+  <meta name="twitter:description" content="{{seo.description}}">
+  <!-- Facebook OpenGraph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{seo.title}}">
+  <meta property="og:description" content="{{seo.description}}">
+  <!-- Fonts -->
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+<link rel="manifest" href="/images/favicon/site.webmanifest">
+{{!-- <link rel="mask-icon" href="/images/favion/safari-pinned-tab.svg" color="#5bbad5"> --}}
+<link rel="shortcut icon" href="/images/favicon/favicon.ico"> 
+  {{!-- <link rel="stylesheet" href="static/css/font-awesome.min.css">--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome5@1.0.5/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.8/swiper-bundle.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="theme-color" content="#F5C332">
+  {{{block "css"}}} 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-1039456108">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-1039456108');
+</script>  
+</head>
+<body>
+    <div class="sb-app">
+     {{> general/header}}
+     {{> general/message}}
+     <div id="sb-dynamic-content" class="sb-transition-fade">
+       {{{body}}}
+       {{> general/footer}}
+     </div>
+    </div>
+    <script src="/js/main.js"></script>
+    {{{block "js"}}} 
+  </body>
+</html>

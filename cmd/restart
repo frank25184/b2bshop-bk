@@ -1,0 +1,5 @@
+#!/bin/bash
+# if restart, then 
+
+mongod --auth --port 27017 --bind_ip_all  --dbpath /var/lib/mongodb  --logpath /var/log/mongod-fork.log --fork
+NODE_ENV=production pm2 start ./bin/www.js

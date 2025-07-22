@@ -1,0 +1,288 @@
+<!--if the single page has the single css file,then use the folling-->
+{{#extend "css"}}
+<style>
+  .myClickIcon{font-size: 1.7rem;display: inline-block;margin-right:1.5rem;}
+  img{
+    max-width:100%;
+  }
+  .actionActive{color: #f8ce5f;}
+  .actionFalse{color: #d4d4d4;}
+  .visitt{position: fixed;right:0.5rem;bottom:4rem;z-index:999;}
+  a.goto{border-radius: 10px!important;font-size:1rem}
+  .post__tag{font-size:10px!important; padding: 3px 8px!important;}
+  .post__head { margin: 10px 0 32px;}
+  .pag{font-size:0.7rem;color:grey;display:inline-block;margin-right:1rem;}
+  .pag a {color:grey;}
+@media (max-width: 768px) {.post__head { margin: 10px 0 32px;}}
+  .h1Title{width:100%;margin-top: 1rem;}
+  .h1Title a.actionBar{
+     display: inline-block;
+     padding:7px 10px;
+     border: 1px solid #d9e1ec;
+     border-radius: 10%;
+    background: #fff;
+    color: #21293c;
+    margin-right:1rem;
+    font-size: 1rem;
+  }
+.h1Title h1,
+.h1Title .actionBar {
+margin: 0; /* 移除默认的外边距 */
+}
+.actionBars{
+  text-align:right;
+}
+@media (max-width: 1024px) {
+.actionBars{
+  text-align:left;
+}
+}
+/***images in a row**/
+.thumbnails {
+display: flex; /* 使用flex布局 */
+overflow-x: auto; /* 允许水平滚动 */
+margin-bottom: 2rem; /* 保持原有的margin-bottom样式 */
+white-space: nowrap; /* 确保所有图片都在一行显示 */
+}
+
+.thumbnails img.lazy {
+display: inline-block; /* 图片内联显示 */
+max-width: 100%; /* 防止图片过大 */
+height: 200px;
+margin-right: 1rem; /* 图片之间的间距 */
+}
+.price{
+  color: rgb(133, 130, 130);padding-top:1rem;
+}
+</style>
+{{#if ../product.imgs.length}}
+<meta name="twitter:image" content="https://coglist.com/upload/sites/thumbnail/{{../../product.imgs.[0]}}">
+<meta property="og:image" content="https://coglist.com/upload/sites/thumbnail/{{../../product.imgs.[0]}}">
+{{/if}}
+<link rel="canonical" href="https://coglist.com/review/{{../product.name_changed}}">
+{{/extend}}
+
+<!-- begin content -->
+<main class="content" aria-label="Content">
+  <div class="container">
+<div class="row">
+<div class="col col-12">
+  <div class="post__head">
+    <div class="post__meta" >
+      <div class="post__tags"> 
+    <span class="pag"><a href="/ai-tools">All</a> / <span style="margin-right:1rem;">{{proCat.name}}</span>
+        {{!-- {{#if siteSubcategories.length}}
+        {{#each siteSubcategories}}<a class="post__tag">{{name}}</a>{{/each}}
+        {{/if}} --}}
+        {{#if product.tagsArray}}
+          {{#each product.tagsArray}}<a class="post__tag">{{this}}</a>{{/each}}
+        {{/if}}
+      </div>
+      {{!-- <span class="article__date">•<time datetime="{{product.updated_at}}">{{product.updated_at}}</time></span> --}}
+    </div>
+    <div class="h1Title">
+      <div class="row" style="align-items: center;">
+        <div class="col col-7 col-d-12 col-t-12">
+           <h1 class="post__title" >{{product.name}}</h1>
+           <div class="visitt">
+         {{#if product.websiteUrl}}
+          <a href="{{product.websiteUrl}}" target="_blank" class="button goto">Visit {{product.name}}</a>
+          {{else}}
+           {{!-- <a href="javascript:void(0)" rel="nofollow" target="_blank" style="color:#edeaea"><i class="ion ion-ios-globe" style="color:#cdc9c9;"  class="myClickIcon"></i></a> --}}
+          {{/if}}   
+           </div>          
+        </div>
+        <div class="col col-5 col-d-12 col-t-12 actionBars">
+          {{#if user}}  
+            {{#if isUpvoted}}
+                <a href="javascript:void(0)" onclick="handleAction('upvote', '{{product._id}}', this)" class="myClickIcon"><i class="ion ion-ios-thumbs-up actionActive"></i></a>
+                <a href="javascript:void(0)" onclick="handleAction('downvote', '{{product._id}}', this)" class="myClickIcon"><i class="ion ion-ios-thumbs-down actionFalse"></i></a>
+            {{else}}
+              {{#if isDownvoted}}
+                  <a href="javascript:void(0)" onclick="handleAction('upvote', '{{product._id}}', this)" class="myClickIcon"><i class="ion ion-ios-thumbs-up actionFalse"></i></a>
+                  <a href="javascript:void(0)" onclick="handleAction('downvote', '{{product._id}}', this)" class="myClickIcon"><i class="ion ion-ios-thumbs-down actionActive"></i></a>
+              {{else}}
+                  <a href="javascript:void(0)" onclick="handleAction('upvote', '{{product._id}}', this)" class="myClickIcon"><i class="ion ion-ios-thumbs-up actionFalse"></i></a>
+                  <a href="javascript:void(0)" onclick="handleAction('downvote', '{{product._id}}', this)" class="myClickIcon"><i class="ion ion-ios-thumbs-down actionFalse"></i></a>
+              {{/if}}
+            {{/if}}
+
+            {{#if isBookmarked}}
+                <a href="javascript:void(0)" onclick="handleAction('bookmark', '{{product._id}}', this)" class="myClickIcon"><i class="ion ion-md-bookmark actionActive"></i></a>
+            {{else}}
+                <a href="javascript:void(0)" onclick="handleAction('bookmark', '{{product._id}}', this)" class="myClickIcon"><i class="ion ion-md-bookmark actionFalse"></i></a>
+            {{/if}}
+          {{else}}
+                  <a href="/user/login" onclick="return redirectToLogin(event)" class="myClickIcon"><i class="ion ion-ios-thumbs-up actionFalse"></i></a>
+                  <a href="/user/login" onclick="return redirectToLogin(event)" class="myClickIcon"><i class="ion ion-ios-thumbs-down actionFalse"></i></a>
+                  <a href="/user/login" onclick="return redirectToLogin(event)" class="myClickIcon"><i class="ion ion-md-bookmark actionFalse"></i></a>
+          {{/if}}
+        </div>
+    </div>
+    </div>
+    <div class="post__description">{{product.intro}}</div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- begin post -->
+<div class="container">
+<div class="row">
+<div class="col col-12 col-w-12 col-d-12">
+  <article class="post">
+    <div class="post__content">
+        <p class="post__author__image thumbnails" style="display:block; margin-bottom:2rem;">
+        {{#each product.imgs}}
+          <img class="lazy" data-src="/upload/sites/thumbnail/{{this}}" alt="{{../product.name}}">
+        {{/each}}
+        </p>
+        {{{product.brief}}}
+     {{#if product.pros}}
+     <div class="table-container" style="overflow-x: auto;">
+        <table style="margin:1rem 0;min-width:600px">
+          <tr>
+            <th>Pros</th>
+            <th>Cons</th>
+            <th>Unique Features</th>
+            <th>Pricing</th>
+            <th>Social Media</th>
+          </tr>
+          <tr>
+            <td>
+              <ul>
+                {{#each product.pros}}
+                <li>✔️ {{this}}</li>
+                {{/each}}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {{#each product.cons}}
+                <li>❌ {{this}}</li>
+                {{/each}}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {{#each product.features}}
+                <li>👍🏻 {{this}}</li>
+                {{/each}}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {{#if product.startingPrice}}
+                <li>{{product.startingPrice}} ~ </li>
+                {{else}}
+                 <li>Empty</li>
+                {{/if}}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {{#if product.socialLinks.length}}
+                  {{#if product.socialLinks.[0]}}
+                    <li> <a class="social__link myClickIcon" href="{{product.socialLinks.[0]}}" target="_blank" rel="noopener" aria-label="Youtube link"><i class="ion ion-logo-youtube"></i></a></li>
+                  {{/if}}
+                  {{#if product.socialLinks.[1]}}
+                    <li> <a class="social__link myClickIcon" href="{{product.socialLinks.[1]}}" target="_blank" rel="noopener" aria-label="Twitter link"><i class="ion ion-logo-twitter"></i></a></li>
+                  {{/if}}
+                {{else}}
+                 <li>Empty</li>
+                {{/if}}
+              </ul>
+            </td>
+          </tr>
+        </table>
+     </div>
+      {{/if}}
+      <!--google ads-->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1402489951269339"
+          crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+          style="display:block; text-align:center;"
+          data-ad-layout="in-article"
+          data-ad-format="fluid"
+          data-ad-client="ca-pub-1402489951269339"
+          data-ad-slot="1515415159"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+      <!--google ads-->
+        {{#if product.youtube}}
+        <br> 
+        <iframe width="560" height="315" src="{{product.youtube}}" title="{{product.name}}" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        {{/if}}
+        {{#if product.startingPrice}}
+          <p class="price">The product ({{product.name}}) starts at {{product.startingPrice}} {{product.priceCurrent}}.</p>
+        {{/if}}
+    </div>
+    <div class="post__share">
+      <ul class="share__list list-reset">
+      <li class="share__item">
+        <a class="share__link share__twitter" rel="nofollow"
+          href="https://twitter.com/intent/tweet?text={{product.name}}&amp;url=https://coglist.com/review/{{product.name_changed}}"
+          onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+          title="Share on Twitter" rel="nofollow"><i class="ion ion-logo-twitter"></i><span class="share-name">Twitter</span></a>
+      </li>
+      <li class="share__item">
+        <a class="share__link share__facebook" rel="nofollow"
+          href="https://www.facebook.com/sharer/sharer.php?u=https://coglist.com/review/{{product.name_changed}}"
+          onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+          title="Share on Facebook" rel="nofollow"><i class="ion ion-logo-facebook"></i><span class="share-name">Facebook</span></a>
+      </li>
+      <li class="share__item">
+        <a class="share__link share__pinterest" rel="nofollow"
+          href="http://pinterest.com/pin/create/button/?url=https://coglist.com/review/{{product.name_changed}}&amp;media=https://coglist.com/upload/sites/thumbnail/{{product.imgs.[0]}}"
+          onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"
+          title="Share on Pinterest" rel="nofollow"><i class="ion ion-logo-pinterest"></i><span class="share-name">Pinterest</span></a>
+      </li>
+      <li class="share__item">
+        <a class="share__link share__linkedin" rel="nofollow"
+          href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://coglist.com/review/{{product.name_changed}}&amp;title={{product.name}}&amp;summary={{product.intro}}&amp;source=CogList"
+          onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+          title="Share on LinkedIn" rel="nofollow"><i class="ion ion-logo-linkedin"></i><span class="share-name">Linkedin</span></a>
+      </li>
+      </ul>
+    </div>
+
+  </article>
+</div>
+
+</div>
+</div>
+<!-- end post -->
+
+ {{#if alternativesThree}}
+<!-- begin related posts -->
+<div class="container">
+<section class="related-posts is-related">
+<div class="row">
+  <div class="col col-12">
+    <div class="container__inner">
+      <div class="section__info">
+        <div class="section__head">
+          <h2 class="section__title">Alternatives</h2>
+                {{!-- <a href="/hub/{{categoriesObj.[0]}}" class="button">View all <i class="ion ion-ios-arrow-forward"></i></a> --}}
+                <!--later we should make it directed to the categories page-->
+        </div>
+      </div>
+
+      <div class="row">
+        {{#each alternativesThree}}
+             <div class="col col-4 col-d-6 col-t-12">
+                {{> v2/general/product}}
+             </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+<!-- end related posts -->
+{{/if}}
+</main>
+<!-- end content -->

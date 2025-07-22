@@ -1,0 +1,36 @@
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+
+echo "install nginx..."
+sudo apt-get install nginx screen
+
+echo "Start NGINX and enable it to start automatically on reboots."
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+
+sudo \cp  /sites/b2bshop/cmd/file/minshengmedical.com  /etc/nginx/sites-available/minshengmedical.com
+
+
+echo "Create a symlink from your NGINX configuration file in the sites-available directory to the sites-enabled directory."
+sudo ln -s /etc/nginx/sites-available/minshengmedical.com /etc/nginx/sites-enabled/minshengmedical.com
+
+
+# sudo \cp /etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/default_backup
+
+# echo "Remove the symlink from NGINX’s default site configuration file." 
+# sudo rm /etc/nginx/sites-enabled/default
+
+echo "Verify that there are no syntax errors in your site’s configuration file."
+ sudo nginx -t
+
+echo "Restart NGINX to load your site’s configuration." 
+sudo systemctl restart nginx
+
+# echo "With Nginx running again, let’s allow full access through the Nginx firewall:"
+# sudo ufw allow 'Nginx Full'
+
+
+
+
+

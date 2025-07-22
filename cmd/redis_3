@@ -1,0 +1,38 @@
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+
+echo "install dependancy for latest redis"
+sudo apt install lsb-release
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+
+sudo apt update -y
+
+echo "install redis..."
+sudo apt install redis-server -y
+
+sudo systemctl enable redis-server
+
+
+echo "backup redis.conf"
+cp /etc/redis/redis.conf /etc/redis/redis.conf.backup
+
+echo "change: supervised systemd +  bind 127.0.0.1 + change requirepass field to: 'requirepass egABVtskzw54kA365D22' "
+sudo vi /etc/redis/redis.conf
+
+
+sudo systemctl restart redis
+echo "check that this change has gone into effect, run the following netstat command:"
+sudo netstat -lnp | grep redis
+
+
+
+sudo systemctl restart redis.service
+
+echo "checking that the Redis service is running:"
+sudo systemctl status redis
+
+echo "restart redis"
+sudo systemctl restart redis

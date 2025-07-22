@@ -1,0 +1,207 @@
+
+      {{#extend "css"}}
+      <style>
+        @media (max-width: 900px){
+          .productImg{padding-top: 150px !important;}
+        }
+        h3{font-size:2.7rem;padding:5px 0}
+      .pg-gallery {position:relative;text-align:center;}
+      .pg-main img {max-width:100%;height:400px;}
+      .pg-btn {position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:1px solid #ddd;width:30px;height:30px;cursor:pointer;}
+      .pg-prev {left:5px;}
+      .pg-next {right:5px;}
+      .pg-thumbs {margin-top:10px;display:flex;justify-content:center;flex-wrap:wrap;}
+      .pg-thumb {width:60px;height:60px;object-fit:cover;margin:3px;cursor:pointer;
+      border:2px solid transparent;}
+      .pg-thumb.pg-active {border-color:#F5C332;}  
+      .sb-filter{margin-top:5rem;margin-bottom:2rem;}
+      img{max-width:100%;}
+
+      @media (max-width: 992px){
+        .topInfo{margin-top: 4rem!important;}
+        .sb-filter{margin-top: 0;;}
+        .sb-product-description{margin-bottom: 50px!important;}
+      }
+      .scrollable-table {
+        overflow-y: auto;
+        display: block;
+        border:0;
+      }
+      @media (max-width: 768px) {
+          .sb-details-tab p {
+              overflow-x: auto;
+          }
+          .sb-details-tab p img {
+              width: auto;
+              min-width: 768px !important;
+              height: auto;
+              display: block;
+          }
+      }
+      </style>
+      {{/extend}}
+      <section class="sb-p-90-0 productImg">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="pg-gallery">
+                <!-- 主图 -->
+                <div class="pg-main">
+                  <img id="pg-main-img" src="/upload/products/thumbnail/{{product.imgs.[0]}}" alt=""> 
+                </div>
+                <!-- 上/下一张 -->
+                <button class="pg-btn pg-prev">&#8249;</button>
+                <button class="pg-btn pg-next">&#8250;</button>
+                <!-- 缩略图 -->
+                <div class="pg-thumbs">
+                  {{#each product.imgs}}
+                    <img
+                      class="pg-thumb{{#if @first}} pg-active{{/if}}"
+                      src="/upload/products/thumbnail/{{this}}"
+                      data-large="/upload/products/thumbnail/{{this}}" 
+                      data-index="{{@index}}"
+                      alt="">
+                      <!--data-large="/upload/products/large/{{this}}"-->
+                  {{/each}}
+                </div>
+              </div>
+              <script>
+                /* 把图片数组注入脚本供轮播用 */
+                var PG_IMGS = {{{json product.imgs}}};
+              </script>
+            </div>
+            <div class="col-lg-6 topInfo">
+              <div class="sb-product-description sb-mb-90">
+                <div class="sb-price-frame sb-mb-30">
+                  <h3>{{product.name}}</h3>
+                  {{!-- {{#if product.priceRange.hasVariants}}
+                    <div class="sb-price"><sub>$</sub> {{product.priceRange.min}}~</div>
+                  {{else}}
+                    <div class="sb-price"><sub>$</sub> {{product.startingPrice}}</div>
+                  {{/if}} --}}
+                </div>
+                {{!-- <p class="sb-text sb-mb-30">Made in China</p> --}}
+                <ul class="sb-stars sb-mb-25">
+                  <li><i class="fas fa-star"></i></li>
+                  <li><i class="fas fa-star"></i></li>
+                  <li><i class="fas fa-star"></i></li>
+                  <li><i class="fas fa-star"></i></li>
+                  <li><i class="fas fa-star"></i></li>
+                  <li><span>(5 ratings)</span></li>
+                </ul>
+                <p class="sb-text sb-mb-30">{{product.intro}}</p>
+
+                <div class="sb-buttons-frame">
+                  {{!-- <div class="sb-input-number-frame">
+                    <div class="sb-input-number-btn sb-sub"  onclick="updateQuantity('decrease')">-</div>
+                  </div> --}}
+                  <!-- button -->
+                  <a href="javascript:void(0)" onclick="gtag_report_conversion('https://minshengmedical.com/support/contact')" class="sb-btn sb-atc conversion" style="display:inline-block; cursor: pointer;">
+                    <span class="sb-icon">
+                      {{!-- <img src="/images/picture/cart.svg" alt="icon"> --}}
+                      Contact
+                    </span>
+                    {{!-- <span class="sb-add-to-cart-text">Add to cart</span>
+                    <span class="sb-added-text">Added</span> --}}
+                  </a>
+
+                  {{#if isAdmin}}
+                  <a href="/product/modify/{{product.name_changed}}"  class="sb-btn sb-atc" style="display:inline-block;">
+                    <span class="sb-icon">
+                      {{!-- <img src="/images/picture/cart.svg" alt="icon"> --}}
+                      Modify
+                    </span>
+                    {{!-- <span class="sb-add-to-cart-text">Add to cart</span>
+                    <span class="sb-added-text">Added</span> --}}
+                  </a>
+                  {{/if}}
+
+                  <!-- button end -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- filter -->
+          <div class="sb-filter">
+            <a href="javascript:void(0)" data-filter=".sb-details-tab" class="sb-filter-link sb-active">Product details</a>
+          </div>
+          <!-- filter end -->
+          <div class="sb-masonry-grid sb-tabs">
+            <div class="sb-grid-sizer"></div>
+            <div class="sb-grid-item sb-details-tab" style="display: block;">
+              <div class="sb-tab">
+                <div class="sb-text">{{{product.content}}}</div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </section>
+      <!-- product end -->
+
+
+
+      {{#extend "js"}}
+<!-- Google Conversion Tracking -->
+<script>
+function gtag_report_conversion(url) {
+  console.log('into gtag_report_conversion');
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+       console.log('redirecting');
+      window.location = url;
+    }
+    console.log('redirecting end');
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-1039456108/uRsZCOGFys8DEOyu0-8D',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+      <script>
+(function () {
+  var mainImg  = document.getElementById('pg-main-img');
+  var thumbs   = document.getElementsByClassName('pg-thumb');
+  var prevBtn  = document.getElementsByClassName('pg-prev')[0];
+  var nextBtn  = document.getElementsByClassName('pg-next')[0];
+  var total    = thumbs.length;
+  var current  = 0;
+
+  function setActive(index) {
+    /* 循环范围 */
+    if (index < 0)       { index = total - 1; }
+    if (index >= total)  { index = 0; }
+    current = index;
+
+    /* 更新主图 */
+    var big = thumbs[index].getAttribute('data-large');
+    mainImg.src = big;
+
+    /* 更新 active 样式 */
+    for (var i = 0; i < total; i++) {
+      thumbs[i].className = thumbs[i].className.replace(/\bpg-active\b/, '');
+    }
+    thumbs[index].className += ' pg-active';
+  }
+
+  /* 缩略图点击 */
+  for (var i = 0; i < total; i++) {
+    (function (idx) {
+      thumbs[idx].onclick = function () { setActive(idx); };
+    })(i);
+  }
+
+  /* 上下按钮 */
+  prevBtn.onclick = function () { setActive(current - 1); };
+  nextBtn.onclick = function () { setActive(current + 1); };
+
+  /* 自动轮播（可选）*/
+  // setInterval(function(){ setActive(current + 1); }, 5000);
+
+  /* 初始 */
+  setActive(0);
+})();
+</script>
+
+      {{/extend}}

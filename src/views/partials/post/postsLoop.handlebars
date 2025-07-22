@@ -1,0 +1,104 @@
+                        {{#if posts}}
+                            {{#each posts}}
+
+
+
+         <div class="columns is-mobile article" >
+            <div class="column is-8" style="padding-left:0;">
+               <div>
+               <div class="card-content">
+                  <div class="media">
+                     <div class="media-left">
+                     <figure class="image" style="width:96px;height:96px;">
+                        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Placeholder image" class="is-96x96" style="">
+                     </figure>
+                     </div>
+                     <div class="media-content">
+                     <h3 class="title is-4" style="font-size: 1.2rem;">{{ title }}</h3>
+                     <p class="subtitle is-6" style="font-size: 0.7rem;color:#aaa;margin-bottom: 0;">
+                        {{!-- <figure class="image is-16x16" style="display:inline-block;">
+                        <img class="is-rounded" src="https://bulma.io/images/placeholders/16x16.png" style="display: inline-block;">  
+                        </figure> --}}
+                       
+                         </p>
+
+
+                  <p  style="margin-top:1.5rem;font-size: 12px;line-height: 1.5em;word-break: break-word;color:#aaa;">
+
+                      <a href="/article/{{title_changed}}">{{intro}}</a>  
+                  </p>
+
+                     </div>
+                  </div>
+
+
+               </div>
+               </div>
+            </div>
+            <div class="column is-mobile is-4" style="text-align:right;">
+               <div class="tags " style="padding: 1.5rem;text-align:right;">
+                {{#each tagsArray}}
+                <span class="tag"><a href="/post/tag/{{_id}}">{{name}}</a></span>
+                {{!-- <span class="tag"><a href="/post/tag/{{tagsArray[1]._id}}">{{tagsArray[1].name}}</a></span> --}}
+                {{/each}}  
+               </div>
+               <i class="fa fa-comment-o" aria-hidden="true"></i>
+            </div>
+
+
+                {{#if ../isMyPosts}}
+            | 
+                <span><a class="edit" href="/admin/edit-article/{{ _id }}">Edit</a></span>
+                <span><a class="edit" href="/admin/delete-article/{{ _id }}">Delete</a></span>
+                {{/if}}
+         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{!-- 
+
+
+                                <li style="list-style:none;" class="block">
+                                
+                                    <p>{{ title }}</p>
+                                    <p class="info" style="font-size:0.5em;line-height:0.1em;">
+                                    Author：<a href="/user/profile/{{user_id}}">{{ postAuthor.username }}</a> | 
+                                    Time：{{ created_at }} |
+                                    Tags:
+                                    {{#each tags}}
+                                    <span style="display:inline-block;border:1px solid grey;line-height:1em"><a href="/post/tag/{{_id}}">{{name}}</a></span>
+                                    {{/each}}                                    
+
+                                     {{#if ../isMyPosts}}
+                                    | 
+                                        <span><a class="edit" href="/admin/edit-article/{{ _id }}">编辑</a></span>
+                                        <span><a class="edit" href="/admin/delete-article/{{ _id }}">删除</a></span>
+                                     {{/if}}
+                                    </p>
+                              
+                                    <p><a href="/article/{{title}}">{{ intro }}</a></p>
+                                </li> --}}
+
+
+                                
+                            {{/each}}
+
+                            {{> post/paging }}
+
+                        {{else}}
+                           No Posts
+                        {{/if}}
+
+

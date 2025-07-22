@@ -1,0 +1,62 @@
+
+<!--if the single page has the single css file,then use the folling-->
+{{#extend "css"}}
+<style>
+          .error{
+        width:100%;
+        margin:0 auto;
+        padding:10%;
+       }
+        h1 {
+            color: #555;
+            font-size: 2em;
+            font-weight: 400;
+            text-align: center;
+        }
+        .error p{
+            text-align: center;
+        }
+        .error  ul {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        }
+
+        .error  ul li {
+        display: inline-block; 
+        margin-right: 20px; 
+
+        }
+        ul li a{color: #f8ce5f; font-weight: 700;}
+        @media only screen and (max-width: 280px) {
+
+          .error  h1 {
+                font-size: 1.5em;
+                margin: 0 0 0.3em;
+          }
+
+        }
+
+</style>
+    <meta name="robots" content="noindex">
+{{/extend}}
+{{> general/message}}
+    <!-- begin content -->
+<main class="content error" aria-label="Content" id="content">
+    <h1>Error</h1>
+    {{error}}
+    <p>{{error.status}}</p>
+    <pre>{{error.stack}}</pre>
+    <ul>
+        <li><a href="/">Home</a></li>
+        {{#if user}}
+        <li><a href="/user/profile/{{user._id}}?tab=upvotedProducts">Your Upvotes</a></li>
+        {{else}}
+        <li><a href="/user/login">Login</a></li>
+        {{/if}}
+        {{#if user}}
+        <li><a href="/user/profile/{{user._id}}?tab=postedProducts">Your Gadgets Posted</a></li>
+        {{/if}}
+    </ul>
+
+</main>
